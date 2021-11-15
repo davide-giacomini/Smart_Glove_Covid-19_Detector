@@ -1,0 +1,2 @@
+- Objective of the project
+- Python that we used

@@ -1,0 +1,2 @@
+- Objective of the project
+- Board that we used
