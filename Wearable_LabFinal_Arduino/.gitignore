@@ -89,10 +89,10 @@ Temporary Items
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
 *.code-workspace
 
 # Local History for Visual Studio Code
@@ -511,3 +511,10 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,linux,macos,windows,platformio,c++
+
+# Custom paths added for this specific project (needed using PlatformIO)
+# TODO: delete folders if subsequently needed (e.g., test if test units are added in the future)
+include/**
+lib/**
+test/**
+platformio.ini
