@@ -1,14 +1,14 @@
 import tkinter as tk
-from tkinter import N, W, E, S, BOTH, NW, NE, SW
-import matplotlib as plt
+from tkinter import N, W, E, S, BOTH
+
 import numpy as np
-import matplotlib.animation as anim
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-from matplotlib.backend_bases import key_press_handler
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.figure import Figure
 
 
 class Plot:
+    """This class controls each chart of the application"""
+
     def __init__(self, fontsize, plot_frame):
         self.__figure = Figure(dpi=fontsize)
         self.__subplot = self.__figure.add_subplot(111)
@@ -21,6 +21,7 @@ class Plot:
         self.__canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
     def append_point(self, point):
+        """It appends a new point to the chart. If the chart is already full, it slides towards the left."""
         if len(self.__points) < self.__LEN_ARRAY:
             self.__points.append(point)
             return
@@ -29,15 +30,13 @@ class Plot:
         self.__points.append(point)
 
     def animate(self, i):
+        """It lets the application receive live updates (code adapted by https://www.youtube.com/watch?v=JQ7QP5rPvjU)"""
         x_array = np.arange(0, len(self.__points), 1)
         self.__subplot.clear()
         self.__subplot.plot(x_array, self.__points)
 
     def get_figure(self):
         return self.__figure
-
-    def get_an(self):
-        return self.__animate
 
 
 class GUI:
@@ -51,12 +50,17 @@ class GUI:
     PAD_BTW_FRAMES = 10  # Padding between frames
     DARK_RED = "#ab2800"
 
-    def update_observers_button(self, button):
-        for observer in self.__observers:
-            observer.update_button(button)
+    def update_observers(self, *args):
+        """This method will call the functions put in the array by the observers of the class GUI"""
+        for callback in self.__callbacks:
+            callback(args)
 
     def __init__(self, root, *args, **kwargs):
-        self.__observers = []
+        """
+        This method initializes all frames of Tkinter and the corresponding classes
+        A sketch of all the components is in the documentation file TODO: decide where to put doc file and do it
+        """
+        self.__callbacks = []   # Callbacks put here by the observers to manage changes in the GUI
         self.__root = root
 
         root.title(GUI.APP_TITLE)
@@ -100,8 +104,9 @@ class GUI:
         self.__bottom_plot_frame.rowconfigure(0, weight=1)
         self.__bottom_plot = Plot(GUI.PLOT_FONT_SIZE, self.__bottom_plot_frame)
 
-    def bind_to(self, observer):
-        self.__observers.append(observer)
+    def bind_callback(self, callback):
+        """This method binds a callback to the GUI. It enables the pattern Observer-Observable"""
+        self.__callbacks.append(callback)
 
     def get_top_plot(self):
         return self.__top_plot

@@ -7,6 +7,8 @@ import serial
 
 import View.GUI as g
 
+# Our application will have to communicate with Arduino at the port 115200 of the serial monitor.
+# The board is the ATMEGA328P, aka Arduino Pro or Pro Mini ATmega328 (https://docs.platformio.org/en/latest/boards/atmelavr/pro8MHzatmega328.html)
 try:
     ser = serial.Serial('/dev/ttyACM0', 115200)  # Create Serial port object called ArduinoUnoSerialData time.sleep(2)
 except:
@@ -14,14 +16,16 @@ except:
 
 
 class MainController:
+    """This class controls the entire application. It's standalone because it's a simple application"""
+
     def __init__(self, gui):
         self.__gui = gui
-        self.__gui.bind_to(self)
+        self.__gui.bind_callback(self.update_button)
 
     def get_gui(self):
         return self.__gui
 
-    def update_button(self, button):
+    def update_button(self, *args):
         pass
 
 
@@ -54,7 +58,7 @@ if __name__ == "__main__":
         except:
             pass
 
-        # TODO remove -> next three lines are debug
+        # TODO remove next three lines (debug)
         gui.get_top_plot().append_point(random.randint(-10, 10))
         gui.get_bottom_plot().append_point(random.randint(-10, 10))
         time.sleep(0.01)
