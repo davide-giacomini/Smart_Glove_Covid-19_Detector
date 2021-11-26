@@ -1,6 +1,7 @@
 import random
 import time
 import tkinter as tk
+import matplotlib.animation as anim
 
 import serial
 
@@ -29,6 +30,12 @@ if __name__ == "__main__":
     gui = g.GUI(root_frame)
     main_controller = MainController(gui)
 
+    # TODO improve these two calls. I would like to call the function `animate` inside the class `Plot`,
+    #  but it no more updates if I do it. It seems like the reference to an1 and an2 get lost for garbage collection.
+    #  Fixing this problem would bring to a cleaner and more maintainable code.
+    an1 = anim.FuncAnimation(gui.get_top_plot().get_figure(), gui.get_top_plot().animate, interval=100)
+    an2 = anim.FuncAnimation(gui.get_bottom_plot().get_figure(), gui.get_bottom_plot().animate, interval=100)
+
     # Update gui window
     root_frame.update_idletasks()
     root_frame.update()
@@ -47,12 +54,10 @@ if __name__ == "__main__":
         except:
             pass
 
-        # gui.get_top_plot().append_point(random.randint(-10, 10))
-        # gui.get_top_plot().plot()
+        # TODO remove -> next three lines are debug
+        gui.get_top_plot().append_point(random.randint(-10, 10))
         gui.get_bottom_plot().append_point(random.randint(-10, 10))
-        gui.get_bottom_plot().plot()
-
-        time.sleep(1)
+        time.sleep(0.01)
 
         # Update gui window forever
         root_frame.update_idletasks()

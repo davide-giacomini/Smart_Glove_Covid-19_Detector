@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import N, W, E, S, BOTH, NW, NE, SW
 import matplotlib as plt
+import numpy as np
+import matplotlib.animation as anim
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
@@ -9,16 +11,14 @@ from matplotlib.figure import Figure
 class Plot:
     def __init__(self, fontsize, plot_frame):
         self.__figure = Figure(dpi=fontsize)
+        self.__subplot = self.__figure.add_subplot(111)
         self.__LEN_ARRAY = GUI.POINTS_NUMBER
+
         self.__points = []
 
         self.__canvas = FigureCanvasTkAgg(self.__figure, master=plot_frame)  # A tk.DrawingArea.
         self.__canvas.draw()
         self.__canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
-
-    def plot(self):
-        for point in range(len(self.__points)):
-            self.__figure.add_subplot(111).plot(point, self.__points[point])
 
     def append_point(self, point):
         if len(self.__points) < self.__LEN_ARRAY:
@@ -28,11 +28,22 @@ class Plot:
         self.__points.pop(0)
         self.__points.append(point)
 
+    def animate(self, i):
+        x_array = np.arange(0, len(self.__points), 1)
+        self.__subplot.clear()
+        self.__subplot.plot(x_array, self.__points)
+
+    def get_figure(self):
+        return self.__figure
+
+    def get_an(self):
+        return self.__animate
+
 
 class GUI:
     """This class gives the basis for building the GUI. It defines the main frames, their position and their style"""
 
-    POINTS_NUMBER = 10
+    POINTS_NUMBER = 200
     PLOT_FONT_SIZE = 100
     SIZE_GRID = 12
     APP_TITLE = "-- DEFINE TITLE --"
@@ -61,7 +72,8 @@ class GUI:
 
         # Control frame setup
         self.__control_frame = tk.Frame(self.__mainframe, background="black")
-        self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky=(N, W, S, E))
+        self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
         self.__control_frame.columnconfigure(0, weight=1)
         self.__control_frame.rowconfigure(0, weight=1)
 
@@ -74,14 +86,16 @@ class GUI:
 
         # Top plot frame setup
         self.__top_plot_frame = tk.Frame(self.__plots_frame, background="black")
-        self.__top_plot_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky=(N, W, S, E))
+        self.__top_plot_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                   sticky=(N, W, S, E))
         self.__top_plot_frame.columnconfigure(0, weight=1)
         self.__top_plot_frame.rowconfigure(0, weight=1)
         self.__top_plot = Plot(GUI.PLOT_FONT_SIZE, self.__top_plot_frame)
 
         # Bottom plot frame setup
         self.__bottom_plot_frame = tk.Frame(self.__plots_frame, background="black")
-        self.__bottom_plot_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky=(N, W, S, E))
+        self.__bottom_plot_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                      sticky=(N, W, S, E))
         self.__bottom_plot_frame.columnconfigure(0, weight=1)
         self.__bottom_plot_frame.rowconfigure(0, weight=1)
         self.__bottom_plot = Plot(GUI.PLOT_FONT_SIZE, self.__bottom_plot_frame)
