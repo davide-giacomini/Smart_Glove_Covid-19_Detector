@@ -23,7 +23,7 @@
 \textit{University of Illinois at Chicago (UIC)}\\
 Chicago (IL), USA \\
 giacomini.davide@outlook.com}
-\and
+\\
 \IEEEauthorblockN{Jake Campbell}
 \IEEEauthorblockA{\textit{dept. of Engineering} \\
 \textit{University of Illinois at Chicago (UIC)}\\
@@ -35,7 +35,7 @@ jacobpmcampbell@gmail.com}
 \textit{University of Illinois at Chicago (UIC)}\\
 Chicago (IL), USA \\
 sbelay2@uic.edu}
-\and
+\\
 \IEEEauthorblockN{Alejandro Dorvall}
 \IEEEauthorblockA{\textit{dept. of Engineering} \\
 \textit{University of Illinois at Chicago (UIC)}\\
@@ -58,43 +58,19 @@ adorva2@uic.edu}
 \maketitle
 
 \begin{abstract}
-Here I'll put the abstract of the work that I do
+    In the current state of the pandemic, local clinics have become more important than ever. We will present a glove with an embedded display which can rapidly detect Covid-19 related symptoms by touching the patient.
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+TODO: insert words
 \end{IEEEkeywords}
 
 \section{Introduction}
-Cloud consistency has always been a major topic to discuss about. In the years, companies have developed state-of-the-art services that are able to provide a balanced trade-off between consistency and efficiency.
+TODO: intro
 
-Generally, each single system focuses on one particular aspect of the trade-off, and therefore there are several different solution for each of the possible services available. For instance, if a company primary objective is gain, consistency will usually be sacrificed for efficiency and low latency. Otherwise, if the primary objective is avoiding illegal states, such as for a bank account application, efficiency will be sacrificed for more consistency.
+\section{Related Work}
 
-We will go through the reasons behind this necessity and we will analyze more in detail already existing systems, addressing advantages and disadvantages of each system (Section \ref{related-work}). We will then address possible ways to overcome the disadvantages.
-
-\section{Related Work}\label{related-work}
-
-The distributed systems literature defines several popular consistency models. Each of these models are thoroughly explained by \citet[chap.~12.2]{kshemkalyani2011distributed}. In decreasing strength, the models include:
-\begin{enumerate}
-    \item Linearizability (strong consistency): it maintains a global, real-time ordering of the events.
-    \item Sequential consistency: it ensures at least global ordering, even though not real-time.
-    \item Causal consistency: it provides partial ordering between dependent operations. It is one of the most used models for services that must be efficient but that cannot create causal inconsistencies, e.g. a general social network.
-    \item FIFO (PRAM) consistency: it only preserves the partial ordering of an execution thread, but not between different threads.
-    \item Slow memory: in this model, only write operations to the same memory location must be synchronized among the processes.
-    \item Eventual consistency: this is the weakest model, as it states that \emph{eventually} consistency will be reached. It is used when it is not necessary to compute immediate causality between values.
-\end{enumerate}
-
-Each different model is necessary as it is unfortunately necessary to consider different trade-offs when designing a new system. Theoretically, distributed storage systems must satisfy three important goals: \emph{availability}, \emph{low latency} and \emph{partition tolerance}.
-
-\subsection{Maintaining the Integrity of the Specifications}
-
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+TODO: background (is it necessary?)
 
 \section{Prepare Your Paper Before Styling}
 Before you begin to format your paper, first write and save the content as a 
