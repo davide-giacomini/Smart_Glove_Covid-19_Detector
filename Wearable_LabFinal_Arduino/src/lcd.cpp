@@ -1,7 +1,7 @@
 #include "lcd.h"
 
 LCD::LCD() {
-    LCD::lcd = &LiquidCrystal(LCD::rs, LCD::en, LCD::d4, LCD::d5, LCD::d6, LCD::d7);
+    LCD::lcd =  new LiquidCrystal(LCD::rs, LCD::en, LCD::d4, LCD::d5, LCD::d6, LCD::d7);
 }
 
 void LCD::setup_lcd() {

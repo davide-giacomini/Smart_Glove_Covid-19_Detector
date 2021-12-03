@@ -202,8 +202,8 @@
 // #define DEF_ADDR 0x55
 
 // // Reset pin, MFIO pin
-// const int resPin = 4;
-// const int mfioPin = 5;
+// const int resPin = 8;
+// const int mfioPin = 9;
 
 // // Takes address, reset pin, and MFIO pin.
 // SparkFun_Bio_Sensor_Hub bioHub(resPin, mfioPin); 
@@ -253,31 +253,31 @@
 
 // }
 
-/*enum class Status : uint8_t {
-   NO_OBJECT_DETECTED = 0,
-   OBJECT_DETECTED = 1,
-   OBJECT_OTHER_THAN_FINGER_DETECTED = 2,
-   FINGER_DETECTED = 3
-};
+// // enum class Status : uint8_t {
+// //    NO_OBJECT_DETECTED = 0,
+// //    OBJECT_DETECTED = 1,
+// //    OBJECT_OTHER_THAN_FINGER_DETECTED = 2,
+// //    FINGER_DETECTED = 3
+// // };
 
-Status get_enum_from_value(uint8_t value) {
+// // Status get_enum_from_value(uint8_t value) {
   
-  switch (value):
-     case 0:
-      return NO_OBJECT_DETECTED;
-      break;
-     case 1:
-      return OBJECT_DETECTED;
-      break;
-     case 2:
-      return OBJECT_OTHER_THAN_FINGER_DETECTED;
-      break;
-     case 3:
-      return FINGER_DETECTED;
-      break;
-}
+// //   switch (value):
+// //      case 0:
+// //       return NO_OBJECT_DETECTED;
+// //       break;
+// //      case 1:
+// //       return OBJECT_DETECTED;
+// //       break;
+// //      case 2:
+// //       return OBJECT_OTHER_THAN_FINGER_DETECTED;
+// //       break;
+// //      case 3:
+// //       return FINGER_DETECTED;
+// //       break;
+// // }
 
-Status status;*/
+// // Status status;
 
 // void loop(){
 
@@ -385,6 +385,7 @@ Status status;*/
 // LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // void setup() {
+//   analogWrite(vo, contrast);
 //   lcd.begin(16, 2);
 //   Serial.begin(115200);
 // }
