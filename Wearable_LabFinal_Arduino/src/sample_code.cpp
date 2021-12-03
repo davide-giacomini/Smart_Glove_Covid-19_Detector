@@ -195,63 +195,63 @@
 //////////////////////////////
 // LAB1 OXIMETER
 
-#include <SparkFun_Bio_Sensor_Hub_Library.h>
-#include <Wire.h>
+// #include <SparkFun_Bio_Sensor_Hub_Library.h>
+// #include <Wire.h>
 
-// No other Address options.
-#define DEF_ADDR 0x55
+// // No other Address options.
+// #define DEF_ADDR 0x55
 
-// Reset pin, MFIO pin
-const int resPin = 4;
-const int mfioPin = 5;
+// // Reset pin, MFIO pin
+// const int resPin = 4;
+// const int mfioPin = 5;
 
-// Takes address, reset pin, and MFIO pin.
-SparkFun_Bio_Sensor_Hub bioHub(resPin, mfioPin); 
+// // Takes address, reset pin, and MFIO pin.
+// SparkFun_Bio_Sensor_Hub bioHub(resPin, mfioPin); 
 
-#define USER_AGE 23
-#define MAX_HR 220-23
+// #define USER_AGE 23
+// #define MAX_HR 220-23
 
-bioData body;
+// bioData body;
 
-long timeCount = 0.0;
-unsigned long real_time;
-float bpm = 0.0;
-bool bpmCheck = false;
-int bpms[30];
+// long timeCount = 0.0;
+// unsigned long real_time;
+// float bpm = 0.0;
+// bool bpmCheck = false;
+// int bpms[30];
 
-float heart_rate;
-float time_btw_beats;
-float blood_oxyg;
-unsigned short confidence_level;
+// float heart_rate;
+// float time_btw_beats;
+// float blood_oxyg;
+// unsigned short confidence_level;
 
 
-void setup(){
+// void setup(){
 
-  Serial.begin(115200);
+//   Serial.begin(115200);
 
-  Wire.begin();
-  int result = bioHub.begin();
-  if (!result)
-    Serial.println("Sensor started!");
-  else
-    Serial.println("Could not communicate with the sensor!!!");
+//   Wire.begin();
+//   int result = bioHub.begin();
+//   if (!result)
+//     Serial.println("Sensor started!");
+//   else
+//     Serial.println("Could not communicate with the sensor!!!");
 
-  Serial.println("Configuring Sensor...."); 
-  int error = bioHub.configBpm(MODE_ONE); // Configuring just the BPM settings. 
-  if(!error){
-    Serial.println("Sensor configured.");
-  }
-  else {
-    Serial.println("Error configuring sensor.");
-    Serial.print("Error: "); 
-    Serial.println(error); 
-  }
-  // Data lags a bit behind the sensor, if you're finger is on the sensor when
-  // it's being configured this delay will give some time for the data to catch
-  // up. 
-  delay(4000); 
+//   Serial.println("Configuring Sensor...."); 
+//   int error = bioHub.configBpm(MODE_ONE); // Configuring just the BPM settings. 
+//   if(!error){
+//     Serial.println("Sensor configured.");
+//   }
+//   else {
+//     Serial.println("Error configuring sensor.");
+//     Serial.print("Error: "); 
+//     Serial.println(error); 
+//   }
+//   // Data lags a bit behind the sensor, if you're finger is on the sensor when
+//   // it's being configured this delay will give some time for the data to catch
+//   // up. 
+//   delay(4000); 
 
-}
+// }
 
 /*enum class Status : uint8_t {
    NO_OBJECT_DETECTED = 0,
@@ -279,53 +279,53 @@ Status get_enum_from_value(uint8_t value) {
 
 Status status;*/
 
-void loop(){
+// void loop(){
 
-    // Information from the readBpm function will be saved to our "body"
-    // variable.  
-    body = bioHub.readBpm();
+//     // Information from the readBpm function will be saved to our "body"
+//     // variable.  
+//     body = bioHub.readBpm();
 
-    Serial.print("Heartrate: ");
-    Serial.println(body.heartRate);
-    Serial.print("Time between bits: ");
-    Serial.println(body.heartRate/60.0);
-    Serial.print("Confidence: ");
-    Serial.println(body.confidence); 
-    Serial.print("Oxygen: ");
-    Serial.println(body.oxygen); 
-    Serial.print("Status: ");
-    Serial.println(body.status);
+//     Serial.print("Heartrate: ");
+//     Serial.println(body.heartRate);
+//     Serial.print("Time between bits: ");
+//     Serial.println(body.heartRate/60.0);
+//     Serial.print("Confidence: ");
+//     Serial.println(body.confidence); 
+//     Serial.print("Oxygen: ");
+//     Serial.println(body.oxygen); 
+//     Serial.print("Status: ");
+//     Serial.println(body.status);
     
-    if (!bpmCheck) {
-      if (timeCount < 30) {
+//     if (!bpmCheck) {
+//       if (timeCount < 30) {
 
-        float currentBpm = body.heartRate;
+//         float currentBpm = body.heartRate;
 
-        if (currentBpm!=0) {
+//         if (currentBpm!=0) {
           
-          bpms[timeCount] = currentBpm;
-          Serial.print("timeCount = ");
-          Serial.println(timeCount);
+//           bpms[timeCount] = currentBpm;
+//           Serial.print("timeCount = ");
+//           Serial.println(timeCount);
   
-          if (timeCount == 29) {
-            Serial.println("ENTERING THE AVERAGE PHASE");
-            long sum = 0;
-              for (int i = 0; i < 30; i++) {
-                sum = sum + bpms[i];
-              }
-            bpm = sum / 30.0;
-            Serial.print("bpm = ");
-            Serial.println(bpm);
-            bpmCheck = true;
-          }
+//           if (timeCount == 29) {
+//             Serial.println("ENTERING THE AVERAGE PHASE");
+//             long sum = 0;
+//               for (int i = 0; i < 30; i++) {
+//                 sum = sum + bpms[i];
+//               }
+//             bpm = sum / 30.0;
+//             Serial.print("bpm = ");
+//             Serial.println(bpm);
+//             bpmCheck = true;
+//           }
           
-          timeCount++;
-        }
-      }
-    }
+//           timeCount++;
+//         }
+//       }
+//     }
     
-    delay(1000); // Slowing it down, we don't need to break our necks here.
-}
+//     delay(1000); // Slowing it down, we don't need to break our necks here.
+// }
 
 
 // EXAMPLE THERMOMETER
