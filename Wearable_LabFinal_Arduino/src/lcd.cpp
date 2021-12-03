@@ -9,7 +9,7 @@ void LCD::setup_lcd() {
     LCD::lcd->begin(16, 2);
 }
 
-void LCD::display_oxy(float o) {
+void LCD::display_oxy(int o) {
     LCD::lcd->setCursor(0, 0);
     LCD::lcd->print("Oxygen: ");
     LCD::lcd->print(o);

@@ -11,6 +11,7 @@ LCD *lcd;
 Thermometer *thermometer;
 Oximeter *oximeter;
 
+// FIXME: Oximeter hardcoded
 const int resPin = 8;
 const int mfioPin = 9;
 // Takes address, reset pin, and MFIO pin.
@@ -27,6 +28,7 @@ void setup() {
 
   // oximeter = new Oximeter();
   // oximeter->setup();
+  //FIXME: OXIMETER hardcoded
   int result = bioHub.begin();
   if (!result)
     Serial.println("Sensor started!");
@@ -94,18 +96,19 @@ void loop() {
   // lcd->display_temp(temp);
 
   // oximeter->write();
+  //FIXME: OXIMETER hardcoded
   body = bioHub.readBpm();
 
-    Serial.print("Heartrate: ");
-    Serial.println(body.heartRate);
-    Serial.print("Time between bits: ");
-    Serial.println(body.heartRate/60.0);
-    Serial.print("Confidence: ");
-    Serial.println(body.confidence); 
-    Serial.print("Oxygen: ");
-    Serial.println(body.oxygen); 
-    Serial.print("Status: ");
-    Serial.println(body.status);
+  Serial.print("Heartrate: ");
+  Serial.println(body.heartRate);
+  Serial.print("Time between bits: ");
+  Serial.println(body.heartRate/60.0);
+  Serial.print("Confidence: ");
+  Serial.println(body.confidence); 
+  Serial.print("Oxygen: ");
+  Serial.println(body.oxygen); 
+  Serial.print("Status: ");
+  Serial.println(body.status);
 
   thermometer->write();
 

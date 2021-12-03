@@ -26,7 +26,6 @@ void Oximeter::setup() {
     // Data lags a bit behind the sensor, if you're finger is on the sensor when
     // it's being configured this delay will give some time for the data to catch
     // up. 
-    delay(4000); 
 }
 
 void Oximeter::write() {

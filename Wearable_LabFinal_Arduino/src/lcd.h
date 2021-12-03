@@ -14,7 +14,7 @@ public:
 
     LCD();
     void setup_lcd();
-    void display_oxy(float o);
+    void display_oxy(int o);
     void display_temp(float t);
     void clear();
 private:
