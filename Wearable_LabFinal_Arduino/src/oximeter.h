@@ -10,11 +10,11 @@ public:
 
     Oximeter::Oximeter();
     void setup();
-    void Oximeter::print_things();
+    void Oximeter::write();
 private:
     /**
      * @brief // Takes address, reset pin, and MFIO pin. 
      */
     SparkFun_Bio_Sensor_Hub* bioHub;
-    bioData body;
+    bioData* body;
 };

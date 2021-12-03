@@ -3,10 +3,11 @@
 Oximeter::Oximeter() {
     // Takes address, reset pin, and MFIO pin. 
    Oximeter::bioHub = new SparkFun_Bio_Sensor_Hub(Oximeter::RS,Oximeter::MFIO); 
+   Oximeter::body = new bioData();
 }
 
 void Oximeter::setup() {
-    Wire.begin();
+    // Wire.beginTransmission(Oximeter::ADDR);
     int result = Oximeter::bioHub->begin();
     if (!result)
         Serial.println("Sensor started!");
@@ -26,18 +27,21 @@ void Oximeter::setup() {
     // Data lags a bit behind the sensor, if you're finger is on the sensor when
     // it's being configured this delay will give some time for the data to catch
     // up. 
-    delay(4000); 
+    // delay(4000); 
+    // Wire.endTransmission();
 }
 
-void Oximeter::print_things() {
+void Oximeter::write() {
+    Oximeter::body = & Oximeter::bioHub->readBpm();
+
     Serial.print("Heartrate: ");
-    Serial.println(Oximeter::body.heartRate);
+    Serial.println(Oximeter::body->heartRate);
     Serial.print("Time between bits: ");
-    Serial.println(Oximeter::body.heartRate/60.0);
+    Serial.println(Oximeter::body->heartRate/60.0);
     Serial.print("Confidence: ");
-    Serial.println(Oximeter::body.confidence); 
+    Serial.println(Oximeter::body->confidence); 
     Serial.print("Oxygen: ");
-    Serial.println(Oximeter::body.oxygen); 
+    Serial.println(Oximeter::body->oxygen); 
     Serial.print("Status: ");
-    Serial.println(Oximeter::body.status);
+    Serial.println(Oximeter::body->status);
 }

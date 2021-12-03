@@ -1,18 +1,28 @@
 #include <Arduino.h>
-#include <LiquidCrystal.h>
-#include <Wire.h>
 #include "lcd.h"
 #include "oximeter.h"
+#include "thermometer.h"
 
 #define USER_AGE 23
 #define MAX_HR 220-23
 
 // WARNING: I initially did `LCD lcd()`, but it doesn't work because the compiler messes something up with the order of constructors call. The issue and solutions are well documented here: https://arduino.stackexchange.com/questions/23168/library-liquidcrystal-i2c-dont-work-in-other-class-composition/23240
 LCD *lcd;
+Thermometer *thermometer;
+Oximeter *oximeter;
 
 void setup() {
-  lcd = new LCD(); // It's the same of `lcd = &LCD()`
+  Serial.begin(115200);
+  Wire.begin();
+
+  lcd = new LCD(); // It's the same of `lcd = &LCD()` 
   lcd->setup_lcd();
+
+  oximeter = new Oximeter();
+  oximeter->setup();
+
+  thermometer = new Thermometer();
+  thermometer->setup();
 }
 
 int readOxy() {
@@ -57,6 +67,10 @@ void loop() {
   lcd->clear();
   lcd->display_oxy(oxy);
   lcd->display_temp(temp);
+
+  oximeter->write();
+
+  thermometer->write();
 
   delay(1000);
 }
