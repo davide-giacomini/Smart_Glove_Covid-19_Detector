@@ -2,6 +2,13 @@
 #include <SparkFun_Bio_Sensor_Hub_Library.h>
 #include <Wire.h>
 
+enum Status {
+    NO_OBJ = 0,
+    OBJ_DET = 1,
+    OBJ_NO_FIN_DET = 2,
+    FING_DET = 3
+};
+
 class Oximeter {
 public:
     static const int ADDR = 0x55;   // Physical address of the device

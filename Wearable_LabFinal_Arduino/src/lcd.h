@@ -14,9 +14,9 @@ public:
 
     LCD();
     void setup_lcd();
-    void display_oxy(int o);
-    void display_temp(float t);
     void clear();
+    void display_error(String error);
+    void display_message(int x, int y, String message);
 private:
     LiquidCrystal *lcd;
 };

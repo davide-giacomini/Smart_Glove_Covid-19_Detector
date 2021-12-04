@@ -4,38 +4,67 @@ Thermometer::Thermometer() {
     Thermometer::thermometer = new IRTherm();
 }
 
-void Thermometer::setup() {
-    // Wire.beginTransmission(Thermometer::ADDR); //Joing I2C bus
+bool Thermometer::setup() {
     
-    if (Thermometer::thermometer->begin() == false){ // Initialize thermal IR sensor
-        Serial.println("Qwiic IR thermometer did not acknowledge! Freezing!");
-        while(1);
-    }
-    Serial.println("Qwiic IR Thermometer did acknowledge.");
+    if (Thermometer::thermometer->begin() == false) // Initialize thermal IR sensor
+        return false;
     
+    // Otherwise the device is set up
     Thermometer::thermometer->setUnit(TEMP_F); // Set the library's units to Farenheit
     // Alternatively, TEMP_F can be replaced with TEMP_C for Celsius or
     // TEMP_K for Kelvin.
     
     pinMode(LED_BUILTIN, OUTPUT); // LED pin as output
 
-    // Wire.endTransmission();
+    return true;
 }
 
-void Thermometer::write() {
-    digitalWrite(LED_BUILTIN, HIGH);
-    
-    // Call therm.read() to read object and ambient temperatures from the sensor.
-    if (Thermometer::thermometer->read()) // On success, read() will return 1, on fail 0.
-    {
-        // Use the object() and ambient() functions to grab the object and ambient
-        // temperatures.
-        // They'll be floats, calculated out to the unit you set with setUnit().
-        Serial.print("Object: " + String(Thermometer::thermometer->object(), 2));
-        Serial.println("F");
-        Serial.print("Ambient: " + String(Thermometer::thermometer->ambient(), 2));
-        Serial.println("F");
-        Serial.println();
-    }
-    digitalWrite(LED_BUILTIN, LOW);
+float Thermometer::getCelsiusObject() {
+    // digitalWrite(LED_BUILTIN, HIGH);
+    Thermometer::thermometer->setUnit(TEMP_C);
+    if (Thermometer::thermometer->read())
+        return Thermometer::thermometer->object();
+    else
+        return -1;
+    // digitalWrite(LED_BUILTIN, LOW);
+}
+
+float Thermometer::getCelsiusAmbient() {
+    Thermometer::thermometer->setUnit(TEMP_C);
+    if (Thermometer::thermometer->read())
+        return Thermometer::thermometer->ambient();
+    else
+        return -1;
+}
+
+float Thermometer::getFahrenheitObject() {
+    Thermometer::thermometer->setUnit(TEMP_F);
+    if (Thermometer::thermometer->read())
+        return Thermometer::thermometer->object();
+    else
+        return -1;
+}
+
+float Thermometer::getFahrenheitAmbient() {
+    Thermometer::thermometer->setUnit(TEMP_F);
+    if (Thermometer::thermometer->read())
+        return Thermometer::thermometer->ambient();
+    else
+        return -1;
+}
+
+float Thermometer::getKelvinObject() {
+    Thermometer::thermometer->setUnit(TEMP_K);
+    if (Thermometer::thermometer->read())   
+        return Thermometer::thermometer->object();
+    else
+        return -1;
+}
+
+float Thermometer::getKelvinAmbient() {
+    Thermometer::thermometer->setUnit(TEMP_K);
+    if (Thermometer::thermometer->read())
+        return Thermometer::thermometer->ambient();
+    else
+        return -1;
 }

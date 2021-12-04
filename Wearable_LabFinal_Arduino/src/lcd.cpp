@@ -9,18 +9,17 @@ void LCD::setup_lcd() {
     LCD::lcd->begin(16, 2);
 }
 
-void LCD::display_oxy(int o) {
-    LCD::lcd->setCursor(0, 0);
-    LCD::lcd->print("Oxygen: ");
-    LCD::lcd->print(o);
-}
-
-void LCD::display_temp(float t) {
-    LCD::lcd->setCursor(0, 1);
-    LCD::lcd->print("Temp: ");
-    LCD::lcd->print(t);
+void LCD::display_message(int x, int y, String message) {
+    LCD::lcd->setCursor(x, y);
+    LCD::lcd->print(message);
 }
 
 void LCD::clear() {
     LCD::lcd->clear();
+}
+
+void LCD::display_error(String error) {
+    LCD::lcd->clear();
+    LCD::lcd->setCursor(0,0);
+    LCD::lcd->print(error);
 }

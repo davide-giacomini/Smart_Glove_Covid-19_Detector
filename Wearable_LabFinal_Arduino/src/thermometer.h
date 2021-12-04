@@ -7,7 +7,60 @@ public:
     static const int ADDR = 0x5A;
 
     Thermometer::Thermometer();
-    void setup();
+    /**
+     * @brief It sets up the device (default temperature is Fahrenheit)
+     * 
+     */
+    bool setup();
+
+    /**
+     * @brief It returns the object temperature in °C, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the object temperature in °C, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getCelsiusObject();
+    /**
+     * @brief It returns the ambient temperature in °C, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the ambient temperature in °C, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getCelsiusAmbient();
+    /**
+     * @brief It returns the object temperature in °F, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the object temperature in °F, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getFahrenheitObject();
+    /**
+     * @brief It returns the ambient temperature in °F, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the ambient temperature in °F, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getFahrenheitAmbient();
+    /**
+     * @brief It returns the object temperature in K, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the object temperature in K, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getKelvinObject();
+    /**
+     * @brief It returns the ambient temperature in K, if readable. If it's not
+     * readable, it returns -1
+     * 
+     * @return float returns the ambient temperature in K, if readable. If it's not
+     * readable, it returns -1
+     */
+    float Thermometer::getKelvinAmbient();
     void write();
 private:
     IRTherm* thermometer;

@@ -23,8 +23,8 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
 
-  // lcd = new LCD(); // It's the same of `lcd = &LCD()` 
-  // lcd->setup_lcd();
+  lcd = new LCD(); // It's the same of `lcd = &LCD()` 
+  lcd->setup_lcd();
 
   // oximeter = new Oximeter();
   // oximeter->setup();
@@ -51,7 +51,10 @@ void setup() {
   // delay(4000);
 
   thermometer = new Thermometer();
-  thermometer->setup();
+  if (!thermometer->setup()) {
+    lcd->display_error("Issue thermom");
+    Serial.println("Thermometer didn't set up correctly");
+  }
 }
 
 int readOxy() {
@@ -85,15 +88,8 @@ void sendHB(float hb) {
 
 void loop() {
 
-  // int oxy = readOxy();
-  // float temp = readTemp();
-  // float heartbeat = readHB();
-  // sendOxy(oxy);
-  // sendTemp(temp);
-  // sendHB(heartbeat);
-  // lcd->clear();
-  // lcd->display_oxy(oxy);
-  // lcd->display_temp(temp);
+  // FIXME: check if thermometer working
+  float obj_temp = thermometer->getFahrenheitObject();
 
   // oximeter->write();
   //FIXME: OXIMETER hardcoded
@@ -110,7 +106,9 @@ void loop() {
   Serial.print("Status: ");
   Serial.println(body.status);
 
-  thermometer->write();
+  lcd->clear();
+  lcd->display_message(0, 0, "Ox: "+String(body.oxygen)+"%");
+  lcd->display_message(0, 1, "T: "+String(obj_temp)+" F");
 
   delay(1000);
 }
