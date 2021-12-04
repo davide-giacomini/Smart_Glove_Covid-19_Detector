@@ -107,8 +107,9 @@ void loop() {
   Serial.println(body.status);
 
   lcd->clear();
-  lcd->display_message(0, 0, "Ox: "+String(body.oxygen)+"%");
-  lcd->display_message(0, 1, "T: "+String(obj_temp)+" F");
+  lcd->display_message(0, 0, "Oxg:"+String(body.oxygen)+"%");
+  lcd->display_message(8, 0, "T:"+String(obj_temp)+"F");
+  lcd->display_message(0, 1, "Suggest Cov test");
 
   delay(1000);
 }
