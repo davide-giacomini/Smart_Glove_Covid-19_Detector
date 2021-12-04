@@ -4,7 +4,7 @@
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 % \usepackage{algorithmic}
-\usepackage{graphicx}
+\usepackage{graphicx, wrapfig, subcaption}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage[numbers]{natbib} % Manual of natbib at https://gking.harvard.edu/files/natnotes2.pdf
@@ -13,8 +13,7 @@
 \begin{document}
 
 \title{Conference Paper Title*\\
-% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-% should not be used}
+{\small CS494 - Wearable Technologies $\mid$ Professor Esmailbeigi}
 % \thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
@@ -56,6 +55,8 @@ adorva2@uic.edu}
 }
 
 \maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
 
 \begin{abstract}
     In the current state of the pandemic, local clinics have become more important than ever. We will present a glove with an embedded display which can rapidly detect Covid-19 related symptoms by touching the patient.
@@ -66,186 +67,68 @@ TODO: insert words
 \end{IEEEkeywords}
 
 \section{Introduction}
-In the pandemic era of SARS covid 19, there have been multiple ways in identifying  the viral disease. There have been many identification methods that include tracking symptoms and using built testing methods such as PCR \cite{smyrlaki2020massive}. These methods are known to be feasible and used to identify symptoms. Interestingly, on a regular  level it has been seen that clinics check for oxygen and temperature levels when examining patients for the viral disease. This method ensures if patients are more likely susceptible to the disease or if they are more likely in the clear. Unluckily, the interaction of clinic workers with patients involves direct contact and use of equipment by different workers. Some of these safety measures have come at the cost of efficiency. Our proposal is a design solution for the issue. In the project we try to implement the same concept of using temperature and oxygen to identify if a patient is at risk by limiting the amount of contact. To do this, we came to produce gloves that can take the temperature and oxygen of patients. Our design is a pair of gloves with a temperature and pulse monitoring sensor built into the fingers as well as an LCD screen that sits on the back of the clinic worker’s hand. This will allow the worker to quickly hold the sensors to the patient’s wrist while running other diagnostics and the device will output the data to the LCD screen as well as present a suggested Covid-19 diagnosis. The device will also have a wireless optional companion user interface that is run on a computer. The interface will display a review of the data and diagnosis from the gloves, but also allow the clinic worker to see a live graph of the patient’s temperature and oxygen level. The temperature graphs will also be able to be preset to either Fahrenheit, Celsius, or Kelvin. Having stated the need statement it is important to consider the sensors and equipment that are able to make this possible.
+In the pandemic era of SARS covid 19, there have been multiple ways in identifying  the viral disease. There have been many identification methods that include tracking symptoms and using built testing methods such as PCR \cite{smyrlaki2020massive}. These methods are known to be feasible and used to identify symptoms. Interestingly, on a regular  level it has been seen that clinics check for oxygen and temperature levels when examining patients for the viral disease. This method ensures if patients are more likely susceptible to the disease or if they are in the clear. It is known from studies that a patient with a temperature greater than or equal to 37.8 degree celsius is more likely at risk of coronavirus disease \cite{jang2020prognostic}. Also, it is a known fact that an oxygen saturation below 92\% is a potential risk of covid 19 disease \cite{jang2020prognostic}. This information gives clinical workers the basic information to assess a patient's risk of coronavirus. Unluckily, the interaction of clinic workers with patients involves direct contact. Some of these safety measures have come at the cost of efficiency. Our proposal is to design a solution for this issue. In the project we try to implement the same concept of using temperature and oxygen saturation to identify patients' risk by limiting the amount of contact. Our design is a glove with a temperature and pulse monitoring sensor built into the fingers as well as an LCD screen that sits on the back of the clinic worker’s hand. This will allow the worker to quickly hold the sensors to the patient’s wrist and finger, while running other diagnostics, and the device will output the data to the LCD screen as well as present a suggested Covid-19 diagnosis. The device will also have a wireless optional companion user interface that is run on a computer. The interface will display a review of the data and diagnosis from the gloves, but also allow the clinic worker to see a live graph of the patient’s temperature and oxygen level. The temperature graphs will also be able to be preset to either Farenhiet, Celsius, or Kelvin. Having stated the need statement it is important to consider the sensors and equipment that are able to make this possible. 
 
-\section{Related Work}
+To measure oxygen saturation we use an oximeter sensor known as the Photoplethysmography (PPG)\footnote{\href{https://www.sparkfun.com/products/15219}{https://www.sparkfun.com/products/15219}}(Figure \ref{fig:oximeter}). This sensor is a pulse rate sensor that is mainly found in smart fitbit watches with a component having a light-emitting diode (LED) and a photodetector (PD) for measuring changes in light absorption. The sensor takes in the measurement of oxygen from the wrist since heart pulses are detected from there. It is important to note that the sensor that is used is a SparkFun module and is assembled to a peripheral board as such. When considering a temperature sensor, we wanted limited contact, which was achieved by using an infrared ray that can read temperature from a range . The sensor used is known as IR Thermometer Evaluation Board - MLX90614\footnote{\href{https://www.sparkfun.com/products/10740}{https://www.sparkfun.com/products/10740}}(Figure \ref{fig:thermometer}). This sensor is known for the high precision, small size, single zone IR thermometer with an optional SMBus (two-wire) or PWM interface. This gives us a temperature reading accurate enough to report human body temperature. The last equipment we wanted to incorporate was the Liquid Crystal Display (LCD) in the device. LCD’s are cheap and popular when it comes to displaying information such as sensor data. This will allow us to display the temperature and oxygen saturation on the device. With the power of a central board and peripheral board, we were able to combine these different sensors to make a wearable covid 19 testing device.
 
-TODO: background (is it necessary?)
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{resources/oximeter.jpg}
+        \caption{PPG sensor}
+        \label{fig:oximeter}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{resources/thermoeter.jpg}
+        \caption{MLX90614 sensor}
+        \label{fig:thermometer}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{resources/LCD.jpg}
+        \caption{LCD sensor}
+        \label{fig:LCD}
+    \end{subfigure}
+    \label{fig:sensors}
+    \caption{Sensors used for the device}
+\end{figure*}
 
-\section{Prepare Your Paper Before Styling}
-Before you begin to format your paper, first write and save the content as a 
-separate text file. Complete all content and organizational editing before 
-formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
-proofreading, spelling and grammar.
+\section{Method}
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{resources/pin-connections-oximeter.png}
+        \caption{Oximeter pins}
+        \label{fig:pin-oximeter}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{resources/pin-therm.png}
+        \caption{Thermometer pins}
+        \label{fig:pin-therm}
+    \end{subfigure}%
+    \begin{subfigure}[b]{.3\linewidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{resources/pin-lcd.png}
+        \caption{LCD pins}
+        \label{fig:pin-lcd}
+    \end{subfigure}
+    \label{fig:pins}
+    \caption{Pin connections for our devices}
+\end{figure*}
+The build of the device required a central board, peripheral board, and a prototype board. The prototype board will require pins to be soldered in so that it can be attached to the peripheral board. We will incorporate the two sensors and LED on the peripheral board. The pins incorporated have to be maneuvered by color coding since all the pins on the prototype board are used. Starting with the pulse sensor, we need to first ground and add a 3v3 voltage for power which is achieved by having it connected to the corresponding pins on the peripheral board. Having done that, we want the SCL and SDA for the pulse sensor connected to the prototype board. The SDA and SCL pin of the sensor is wire wrapped to the same corresponding pin of the prototype board. Interestingly, the pins left from the pulse sensor are RST and the MFIO which will be wire wrapped to the D8 and D9 pins of the peripheral board. The corresponding pin layout for the pulse sensor are shown at figure \ref{fig:pin-oximeter}.
 
-Keep your text and graphic files separate until after the text has been 
-formatted and styled. Do not number text heads---{\LaTeX} will do that 
-for you.
+Having connected the pulse sensor, we move on and connect the thermometer on the same peripheral board. It is important to note that the same pins cannot be used for connection on the prototype board. This is because the signals will interfere with each other causing the device to lose functionality. The only pins we can connect to similar pins are the power 3v3 and GND pins. Another interesting fact is that the thermometer pins also need connection to the SDA and SCL pins. This can be achieved by having different addresses when implementing code for the pulse and thermometer sensor. The pin connection for the thermometer are shown at figure \ref{fig:pin-therm}.
 
-\subsection{Abbreviations and Acronyms}\label{AA}
-Define abbreviations and acronyms the first time they are used in the text, 
-even after they have been defined in the abstract. Abbreviations such as 
-IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
-abbreviations in the title or heads unless they are unavoidable.
+Having this connection on the board  will give us all the necessary value to make the predictions if a patient has covid 19. As the last design scheme, an LCD connection with these sensors will give a visual representation of a patient's diagnosis. The LCD pin connections involve more wiring than both the sensors. Also, it  requires a 5 V range that is replaced by a VCC pin on the prototype board and requires most of the digital pins of the prototype board to be wired wrapped with the LCD pins. The exact pin connections between the boards are shown at figure \ref{fig:pin-lcd}.
 
-\subsection{Units}
-\begin{itemize}
-\item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-\item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-\item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-\item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
-\end{itemize}
+After having the connections, the next cycle involves the actual glove design. For this design we attach the pulse meter to the index finger of the gloves. This makes it easy for the user to measure oxygen saturation for the patient while keeping a necessary distance. The oxygen level will be measured from the patient's index finger as well. The temperature sensor will be placed on the middle finger of the glove. This gives the accessibility to measure the temperature with comfortability for both the user and patient. Information is processed and shown on the top side view of the gloves by the LCD screen. This makes information easy to view for the user and diagnose the patient accordingly. 
 
-\subsection{Equations}
-Number equations consecutively. To make your 
-equations more compact, you may use the solidus (~/~), the exp function, or 
-appropriate exponents. Italicize Roman symbols for quantities and variables, 
-but not Greek symbols. Use a long dash rather than a hyphen for a minus 
-sign. Punctuate equations with commas or periods when they are part of a 
-sentence, as in:
-\begin{equation}
-a+b=\gamma\label{eq}
-\end{equation}
-
-Be sure that the 
-symbols in your equation have been defined before or immediately following 
-the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at 
-the beginning of a sentence: ``Equation \eqref{eq} is . . .''
-
-\subsection{\LaTeX-Specific Advice}
-
-Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
-of ``hard'' references (e.g., \verb|(1)|). That will make it possible
-to combine sections, add equations, or change the order of figures or
-citations without having to go through the file line by line.
-
-Please don't use the \verb|{eqnarray}| equation environment. Use
-\verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
-environment leaves unsightly spaces around relation symbols.
-
-Please note that the \verb|{subequations}| environment in {\LaTeX}
-will increment the main equation counter even when there are no
-equation numbers displayed. If you forget that, you might write an
-article in which the equation numbers skip from (17) to (20), causing
-the copy editors to wonder if you've discovered a new method of
-counting.
-
-{\LaTeX} can't read your mind. If you assign the same label to a
-subsubsection and a table, you might find that Table I has been cross
-referenced as Table IV-B3. 
-
-{\LaTeX} does not have precognitive abilities. If you put a
-\verb|\label| command before the command that updates the counter it's
-supposed to be using, the label will pick up the last counter to be
-cross referenced instead. In particular, a \verb|\label| command
-should not go before the caption of a figure or a table.
-
-Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
-will not stop equation numbers inside \verb|{array}| (there won't be
-any anyway) and it might stop a wanted equation number in the
-surrounding equation.
-
-\subsection{Some Common Mistakes}\label{SCM}
-\begin{itemize}
-\item The word ``data'' is plural, not singular.
-\item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
-\item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
-\item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
-\item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
-\item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
-\item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
-\item Do not confuse ``imply'' and ``infer''.
-\item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
-\item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
-\item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
-\end{itemize}
-An excellent style manual for science writers is \cite{b7}.
-
-\subsection{Authors and Affiliations}
-\textbf{The class file is designed for, but not limited to, six authors.} A 
-minimum of one author is required for all conference articles. Author names 
-should be listed starting from left to right and then moving down to the 
-next line. This is the author sequence that will be used in future citations 
-and by indexing services. Names should not be listed in columns nor group by 
-affiliation. Please keep your affiliations as succinct as possible (for 
-example, do not differentiate among departments of the same organization).
-
-\subsection{Identify the Headings}
-Headings, or heads, are organizational devices that guide the reader through 
-your paper. There are two types: component heads and text heads.
-
-Component heads identify the different components of your paper and are not 
-topically subordinate to each other. Examples include Acknowledgments and 
-References and, for these, the correct style to use is ``Heading 5''. Use 
-``figure caption'' for your Figure captions, and ``table head'' for your 
-table title. Run-in heads, such as ``Abstract'', will require you to apply a 
-style (in this case, italic) in addition to the style provided by the drop 
-down menu to differentiate the head from the text.
-
-Text heads organize the topics on a relational, hierarchical basis. For 
-example, the paper title is the primary text head because all subsequent 
-material relates and elaborates on this one topic. If there are two or more 
-sub-topics, the next level head (uppercase Roman numerals) should be used 
-and, conversely, if there are not at least two sub-topics, then no subheads 
-should be introduced.
-
-\subsection{Figures and Tables}
-\paragraph{Positioning Figures and Tables} Place figures and tables at the top and 
-bottom of columns. Avoid placing them in the middle of columns. Large 
-figures and tables may span across both columns. Figure captions should be 
-below the figures; table heads should appear above the tables. Insert 
-figures and tables after they are cited in the text. Use the abbreviation 
-``Fig.~\ref{fig}'', even at the beginning of a sentence.
-
-\begin{table}[htbp]
-\caption{Table Type Styles}
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Table}&\multicolumn{3}{|c|}{\textbf{Table Column Head}} \\
-\cline{2-4} 
-\textbf{Head} & \textbf{\textit{Table column subhead}}& \textbf{\textit{Subhead}}& \textbf{\textit{Subhead}} \\
-\hline
-copy& More table copy$^{\mathrm{a}}$& &  \\
-\hline
-\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
-\end{tabular}
-\label{tab1}
-\end{center}
-\end{table}
-
-\begin{figure}[htbp]
-\centerline{\includegraphics{./resources/fig1.png}}
-\caption{Example of a figure caption.}
-\label{fig}
-\end{figure}
-
-Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
-rather than symbols or abbreviations when writing Figure axis labels to 
-avoid confusing the reader. As an example, write the quantity 
-``Magnetization'', or ``Magnetization, M'', not just ``M''. If including 
-units in the label, present them within parentheses. Do not label axes only 
-with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization 
-\{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of 
-quantities and units. For example, write ``Temperature (K)'', not 
-``Temperature/K''.
-
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
-
-\section*{References}
-
-Please number citations consecutively within brackets \citet{kshemkalyani2011distributed}.
 
 \bibliographystyle{unsrtnat} % Cannot upload \bibliographystyle{IEEEtran}, don't know why
 \bibliography{bibliography}
-
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
 
 \end{document}
