@@ -5,6 +5,48 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.figure import Figure
 
+class Oximeter:
+    """This class displays oximeter values"""
+    def __init__(self, oxim_frame):
+        self.__oxim_frame = oxim_frame
+
+class Thermometer:
+    """This class displays the themperature values"""
+    def __init__(self, thermo_frame):
+        self.__thermo_frame = thermo_frame
+        self.__thermo_frame.columnconfigure(0, weight=7)
+        self.__thermo_frame.columnconfigure(1, weight=3)
+        self.__thermo_frame.rowconfigure(0, weight=1)
+        self.__thermo_frame.rowconfigure(1, weight=1)
+
+        # Object temperature label
+        self.__control_frame = tk.Frame(self.__thermo_frame, background="black")
+        self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
+        self.__control_frame.columnconfigure(0, weight=1)
+        self.__control_frame.rowconfigure(0, weight=1)
+        self.__control_label = tk.Label(self.__control_frame, anchor="c", font=("Courier", 30))
+        self.__control_label.grid(column=0, row=2, sticky="news", padx=60, pady=60)
+
+        # Ambient temperature label
+        self.__control_frame = tk.Frame(self.__thermo_frame, background="black")
+        self.__control_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
+        self.__control_frame.columnconfigure(0, weight=1)
+        self.__control_frame.rowconfigure(0, weight=1)
+
+        # Ambient temperature label
+        self.__control_frame = tk.Frame(self.__thermo_frame, background="black")
+        self.__control_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
+        self.__control_frame.columnconfigure(0, weight=1)
+        self.__control_frame.rowconfigure(0, weight=1)
+
+        # Unit button
+        self.__change_unit_but = tk.Button(self.__thermo_frame, text="Change Unit", anchor="c", font=("Courier", 10), fg="green")
+        # self.__play_pause_button.config(command=lambda: controller.play_pause_callback(self.__play_pause_button))
+        self.__change_unit_but.grid(column=1, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
+
 
 class Plot:
     """This class controls each chart of the application"""
@@ -80,6 +122,20 @@ class GUI:
                                   sticky=(N, W, S, E))
         self.__control_frame.columnconfigure(0, weight=1)
         self.__control_frame.rowconfigure(0, weight=1)
+        self.__control_frame.rowconfigure(1, weight=1)
+
+        # Thermometer frame setup
+        self.__thermo_frame = tk.Frame(self.__control_frame, background="red")
+        self.__thermo_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
+        self.__thermometer = Thermometer(self.__thermo_frame)
+
+        # Oximeter frame setup
+        self.__oxim_frame = tk.Frame(self.__control_frame, background="red")
+        self.__oxim_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
+                                  sticky=(N, W, S, E))
+        self.__oximeter = Oximeter(self.__oxim_frame)
+
 
         # Plots frame setup
         self.__plots_frame = tk.Frame(self.__mainframe, background=GUI.DARK_RED)
