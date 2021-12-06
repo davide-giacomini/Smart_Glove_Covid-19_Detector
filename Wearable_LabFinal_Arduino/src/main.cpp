@@ -57,59 +57,99 @@ void setup() {
   }
 }
 
-int readOxy() {
-  int o = 68; // TODO check oximeter read
-  return o;
+/**
+ * @brief It displays the temperature and the oxygen level on the LCD.
+ * 
+ * @param ox it must be a string
+ * @param temp it must be a string
+ * @param unit it must be a char either 'F', 'C', 'K'.
+ */
+void lcd_display_f(String ox, String temp, char unit) {
+    lcd->clear();
+    lcd->display_message(0, 0, "Oxg:"+ ox +"%");
+    lcd->display_message(8, 0, "T:"+ temp + unit);
 }
 
-float readTemp() {
-  float t = 93; // TODO check temp read
-  return t;
+/**
+ * @brief This function calculates if the patient has the fever 
+ * CDC guidenlines -> Limit of fever CDC -> https://www.cdc.gov/quarantine/maritime/definitions-signs-symptoms-conditions-ill-travelers.html
+ * 
+ * @param temp_C the temperature taken in input is in Celsius.
+ */
+void display_covid_status(float temp_C) {
+  if (temp_C > 38) {
+    lcd->display_message(0, 1, "Suggest Cov Test");
+  }
+  else {
+    lcd->display_message(0, 1, "Healthy Patient");
+  }
 }
 
-float readHB() {
-  float hb = 57; // TODO check heartbeat read
-  return hb;
-}
-
-void sendOxy(int o) { // TODO send data function send everything in one function
-  Serial.print(o);
-}
-
-void sendTemp(float t) {
-  Serial.print("+");
-  Serial.print(t);
-}
-
-void sendHB(float hb) {
-  Serial.print("+");
-  Serial.println(hb);
+/**
+ * @brief This function calculates if the patient has the fever 
+ * CDC guidenlines:
+ * - Limit of fever CDC -> https://www.cdc.gov/quarantine/maritime/definitions-signs-symptoms-conditions-ill-travelers.html
+ * - Limit of oxygen saturation CDC -> https://www.cdc.gov/coronavirus/2019-ncov/videos/oxygen-therapy/Basics_of_Oxygen_Monitoring_and_Oxygen_Therapy_Transcript.pdf
+ * 
+ * @param ox this is the oxygen in percentage
+ * @param temp_C the temperature taken in input is in Celsius.
+ */
+void display_covid_status(float ox, float temp_C) {
+  if (ox < 95) {
+    lcd->display_message(0, 1, "Oxg too low. Go to the hospital!");
+  }
+  else if (temp_C > 38) {
+    lcd->display_message(0, 1, "Suggest Cov Test");
+  }
+  else {
+    lcd->display_message(0, 1, "Healthy Patient");
+  }
 }
 
 void loop() {
 
   // FIXME: check if thermometer working
-  float obj_temp = thermometer->getFahrenheitObject();
+  float obj_temp_F = thermometer->getFahrenheitObject();
+  float obj_temp_C = thermometer->getCelsiusObject();
+  float obj_temp_K = thermometer->getKelvinObject();
+  float amb_temp_F = thermometer->getFahrenheitAmbient();
+  float amb_temp_C = thermometer->getCelsiusAmbient();
+  float amb_temp_K = thermometer->getKelvinAmbient();
 
   // oximeter->write();
   //FIXME: OXIMETER hardcoded
   body = bioHub.readBpm();
+  uint8_t oxim_status = body.status;
+  uint8_t oxygen = body.oxygen;
 
-  Serial.print("Heartrate: ");
-  Serial.println(body.heartRate);
-  Serial.print("Time between bits: ");
-  Serial.println(body.heartRate/60.0);
-  Serial.print("Confidence: ");
-  Serial.println(body.confidence); 
-  Serial.print("Oxygen: ");
-  Serial.println(body.oxygen); 
-  Serial.print("Status: ");
-  Serial.println(body.status);
+  if (oxim_status == uint8_t(OximeterStatus::NO_OBJ)) {
+    lcd_display_f("N/A", String(obj_temp_F), 'F');
+    display_covid_status(obj_temp_C);
+  }
+  else if (oxim_status != uint8_t(OximeterStatus::FING_DET)) {
+    lcd_display_f("N/A", String(obj_temp_F), 'F');
+    lcd->display_message(0, 1, "Measuring Oxg..");
+  }
+  else if (oxim_status == uint8_t(OximeterStatus::FING_DET)) {
+    lcd_display_f(String(oxygen), String(obj_temp_F), 'F');
+    display_covid_status(oxygen, obj_temp_C);
+  }
 
-  lcd->clear();
-  lcd->display_message(0, 0, "Oxg:"+String(body.oxygen)+"%");
-  lcd->display_message(8, 0, "T:"+String(obj_temp)+"F");
-  lcd->display_message(0, 1, "Suggest Cov test");
+  // Serial.print("Heartrate: ");
+  // Serial.println(body.heartRate);
+  // Serial.print("Time between bits: ");
+  // Serial.println(body.heartRate/60.0);
+  // Serial.print("Confidence: ");
+  // Serial.println(body.confidence); 
+  // Serial.print("Oxygen: ");
+  // Serial.println(body.oxygen); 
+  // Serial.print("Status: ");
+  // Serial.println(body.status);
+
+  // lcd->clear();
+  // lcd->display_message(0, 0, "Oxg:"+String(body.oxygen)+"%");
+  // lcd->display_message(8, 0, "T:"+String(obj_temp_F)+"F");
+  // lcd->display_message(0, 1, "Suggest Cov test");
 
   delay(1000);
 }

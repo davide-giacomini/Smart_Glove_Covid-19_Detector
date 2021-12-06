@@ -2,7 +2,7 @@
 #include <SparkFun_Bio_Sensor_Hub_Library.h>
 #include <Wire.h>
 
-enum Status {
+enum class OximeterStatus {
     NO_OBJ = 0,
     OBJ_DET = 1,
     OBJ_NO_FIN_DET = 2,
