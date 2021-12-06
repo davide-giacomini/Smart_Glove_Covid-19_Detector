@@ -18,10 +18,15 @@ const int mfioPin = 9;
 SparkFun_Bio_Sensor_Hub bioHub(resPin, mfioPin); 
 bioData body;
 
+char current_unit;
+unsigned long start_time;
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
+
+  current_unit = 'F';
+  start_time = millis();
 
   lcd = new LCD(); // It's the same of `lcd = &LCD()` 
   lcd->setup_lcd();
@@ -64,7 +69,7 @@ void setup() {
  * @param temp it must be a string
  * @param unit it must be a char either 'F', 'C', 'K'.
  */
-void lcd_display_f(String ox, String temp, char unit) {
+void lcd_display_values(String ox, String temp, char unit) {
     lcd->clear();
     lcd->display_message(0, 0, "Oxg:"+ ox +"%");
     lcd->display_message(8, 0, "T:"+ temp + unit);
@@ -96,7 +101,9 @@ void display_covid_status(float temp_C) {
  */
 void display_covid_status(float ox, float temp_C) {
   if (ox < 95) {
-    lcd->display_message(0, 1, "Oxg too low. Go to the hospital!");
+    lcd->display_message(0, 3, "Oxg too low");
+    delay(1500);
+    lcd->display_message(0, 1, "Go to hospital!");
   }
   else if (temp_C > 38) {
     lcd->display_message(0, 1, "Suggest Cov Test");
@@ -122,16 +129,37 @@ void loop() {
   uint8_t oxim_status = body.status;
   uint8_t oxygen = body.oxygen;
 
+  if (millis() - start_time > 5000){
+      if (current_unit == 'F')  current_unit = 'C';
+      else current_unit = 'F';
+
+      start_time = millis();  
+  }
+
   if (oxim_status == uint8_t(OximeterStatus::NO_OBJ)) {
-    lcd_display_f("N/A", String(obj_temp_F), 'F');
+    String temp_to_display;
+    if (current_unit == 'F') {
+      temp_to_display = String(obj_temp_F);
+    }
+    else {
+      temp_to_display = String(obj_temp_C);
+    }
+    lcd_display_values("N/A", temp_to_display, current_unit);
     display_covid_status(obj_temp_C);
   }
   else if (oxim_status != uint8_t(OximeterStatus::FING_DET)) {
-    lcd_display_f("N/A", String(obj_temp_F), 'F');
+    lcd_display_values("N/A", String(obj_temp_F), current_unit);
     lcd->display_message(0, 1, "Measuring Oxg..");
   }
   else if (oxim_status == uint8_t(OximeterStatus::FING_DET)) {
-    lcd_display_f(String(oxygen), String(obj_temp_F), 'F');
+    String temp_to_display;
+    if (current_unit == 'F') {
+      temp_to_display = String(obj_temp_F);
+    }
+    else {
+      temp_to_display = String(obj_temp_C);
+    }
+    lcd_display_values(String(oxygen), temp_to_display, current_unit);
     display_covid_status(oxygen, obj_temp_C);
   }
 
