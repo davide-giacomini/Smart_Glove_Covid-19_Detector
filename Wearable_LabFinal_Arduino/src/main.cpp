@@ -163,21 +163,27 @@ void loop() {
     display_covid_status(oxygen, obj_temp_C);
   }
 
-  // Serial.print("Heartrate: ");
-  // Serial.println(body.heartRate);
-  // Serial.print("Time between bits: ");
-  // Serial.println(body.heartRate/60.0);
-  // Serial.print("Confidence: ");
-  // Serial.println(body.confidence); 
-  // Serial.print("Oxygen: ");
-  // Serial.println(body.oxygen); 
-  // Serial.print("Status: ");
-  // Serial.println(body.status);
-
-  // lcd->clear();
-  // lcd->display_message(0, 0, "Oxg:"+String(body.oxygen)+"%");
-  // lcd->display_message(8, 0, "T:"+String(obj_temp_F)+"F");
-  // lcd->display_message(0, 1, "Suggest Cov test");
-
+  Serial.print(obj_temp_F);
+  Serial.print("+");
+  Serial.print(obj_temp_C);
+  Serial.print("+");
+  Serial.print(obj_temp_K);
+  Serial.print("+");
+  Serial.print(amb_temp_F);
+  Serial.print("+");
+  Serial.print(amb_temp_C);
+  Serial.print("+");
+  Serial.print(amb_temp_K);
+  Serial.print("+");
+  Serial.print(body.status);
+  Serial.print("+");
+  Serial.print(body.oxygen);
+  Serial.print("+");
+  Serial.print(body.confidence);
+  Serial.print("+");
+  Serial.print(body.heartRate);
+  Serial.print("+");
+  Serial.println(" ");
+  
   delay(1000);
 }
