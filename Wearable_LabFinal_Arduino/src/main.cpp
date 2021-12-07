@@ -136,6 +136,7 @@ void loop() {
       start_time = millis();  
   }
 
+  // FIXME: the temperature in Fahrenheit must be with only one decimal digit if it is over 100
   if (oxim_status == uint8_t(OximeterStatus::NO_OBJ)) {
     String temp_to_display;
     if (current_unit == 'F') {
@@ -184,6 +185,6 @@ void loop() {
   Serial.print(body.heartRate);
   Serial.print("+");
   Serial.println(" ");
-  
+
   delay(1000);
 }
