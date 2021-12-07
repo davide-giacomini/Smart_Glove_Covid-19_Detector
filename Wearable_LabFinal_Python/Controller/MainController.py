@@ -9,6 +9,7 @@ import View.GUI as g
 
 # Our application will have to communicate with Arduino at the port 115200 of the serial monitor.
 # The board is the ATMEGA328P, aka Arduino Pro or Pro Mini ATmega328 (https://docs.platformio.org/en/latest/boards/atmelavr/pro8MHzatmega328.html)
+
 try:
     ser = serial.Serial('/dev/ttyACM0', 115200)  # Create Serial port object called ArduinoUnoSerialData time.sleep(2)
 except:
@@ -54,9 +55,20 @@ if __name__ == "__main__":
         try:
             if ser.in_waiting:
                 line = ser.readline().decode("utf-8")
-                print(line)
-        except:
-            pass
+                values = line.split("+")
+                obj_temp_F = float(values[0])
+                obj_temp_C = float(values[1])
+                obj_temp_K = float(values[2])
+                amb_temp_F = float(values[3])
+                amb_temp_C = float(values[4])
+                amb_temp_K = float(values[5])
+                ox_status = int(values[6])
+                ox_oxygen = int(values[7])
+                ox_confidence = int(values[8])
+                ox_heart_rate = float(values[9])
+                gui.get_thermometer().set_temp(obj_temp_F, obj_temp_C, obj_temp_K, amb_temp_F, amb_temp_C, amb_temp_K)
+        except Exception as err:
+            print(Exception, err)
 
         # TODO remove next three lines (debug)
         gui.get_top_plot().append_point(random.randint(-10, 10))
