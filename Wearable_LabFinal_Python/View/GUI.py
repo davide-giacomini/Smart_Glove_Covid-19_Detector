@@ -164,7 +164,7 @@ class Oximeter:
         self.__status_label.config(text="Status: " + str(self.__status))
         self.__oxygen_label.config(text="Oxygen: " + str(self.__oxygen) + "%")
         self.__confidence_label.config(text="Confidence: " + str(self.__confidence) + "%")
-        self.__heart_rate_label.config(text="Heart Rate: " + str(self.__oxygen) + "BPM")
+        self.__heart_rate_label.config(text="Heart Rate: " + str(self.__heart_rate) + "BPM")
 
     def get_heart_rate(self):
         return self.__heart_rate
