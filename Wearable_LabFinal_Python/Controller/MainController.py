@@ -67,8 +67,10 @@ if __name__ == "__main__":
                 ox_confidence = int(values[8])
                 ox_heart_rate = float(values[9])
                 gui.get_thermometer().set_temp(obj_temp_F, obj_temp_C, obj_temp_K, amb_temp_F, amb_temp_C, amb_temp_K)
+                gui.get_oximeter().set_parameters(ox_status, ox_oxygen, ox_confidence, ox_heart_rate)
         except Exception as err:
-            print(Exception, err)
+            # print(Exception, err)
+            pass
 
         # TODO remove next three lines (debug)
         gui.get_top_plot().append_point(random.randint(-10, 10))
