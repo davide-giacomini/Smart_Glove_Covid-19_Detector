@@ -113,6 +113,21 @@ void display_covid_status(float ox, float temp_C) {
   }
 }
 
+float custom_round(float var) {
+    // we use array of chars to store number
+    // as a string.
+    char str[40];
+ 
+    // Print in string the value of var
+    // with two decimal point
+    sprintf(str, "%.1f", var);
+ 
+    // scan string value in var
+    sscanf(str, "%f", &var);
+ 
+    return var;
+}
+
 void loop() {
 
   // FIXME: check if thermometer working
@@ -140,7 +155,8 @@ void loop() {
   if (oxim_status == uint8_t(OximeterStatus::NO_OBJ)) {
     String temp_to_display;
     if (current_unit == 'F') {
-      temp_to_display = String(obj_temp_F);
+        // Useful for displaying only 4 total digits
+        temp_to_display = obj_temp_F > 100 ? String(int(obj_temp_F)) : String(obj_temp_F);
     }
     else {
       temp_to_display = String(obj_temp_C);
@@ -149,13 +165,17 @@ void loop() {
     display_covid_status(obj_temp_C);
   }
   else if (oxim_status != uint8_t(OximeterStatus::FING_DET)) {
-    lcd_display_values("N/A", String(obj_temp_F), current_unit);
+      if (current_unit == 'F')
+        lcd_display_values("N/A", obj_temp_F > 100 ? String(int(obj_temp_F)) : String(obj_temp_F), current_unit);
+      else
+        lcd_display_values("N/A", String(obj_temp_C), current_unit);
+
     lcd->display_message(0, 1, "Measuring Oxg..");
   }
   else if (oxim_status == uint8_t(OximeterStatus::FING_DET)) {
     String temp_to_display;
     if (current_unit == 'F') {
-      temp_to_display = String(obj_temp_F);
+      temp_to_display = obj_temp_F > 100 ? String(int(obj_temp_F)) : String(obj_temp_F);
     }
     else {
       temp_to_display = String(obj_temp_C);
@@ -186,5 +206,5 @@ void loop() {
   Serial.print("+");
   Serial.println(" ");
 
-  delay(1000);
+  delay(100);
 }
