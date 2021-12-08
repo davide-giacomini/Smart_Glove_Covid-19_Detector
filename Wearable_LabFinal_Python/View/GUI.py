@@ -34,13 +34,17 @@ class Diagnosis:
         self.__lower_frame.columnconfigure(0, weight=1)
         self.__lower_frame.rowconfigure(0, weight=1)
         self.__lower_frame.rowconfigure(1, weight=1)
+        self.__lower_frame.rowconfigure(2, weight=1)
 
         self.__start_button = None
         self.position_button()
 
-        self.__values_frame = tk.Label(self.__lower_frame, text="Average values still undefined", anchor="center",
-                                       font=("Courier", 20))
+        self.__values_frame = tk.Label(self.__lower_frame, text="Average values still undefined", anchor="center", font=("Courier", 20))
         self.__values_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
+
+        self.__diagnosis_label = tk.Label(self.__lower_frame, text="Parameters correct.\nThe patient is healthy", anchor="center", font=("Courier", 20))
+        self.__diagnosis_label.grid(column=0, row=2, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
+
 
     def position_button(self):
         self.__start_button = tk.Button(self.__lower_frame, text="Start diagnosis", anchor="center", font=("Courier", 10), fg="green")
@@ -55,18 +59,18 @@ class Diagnosis:
         self.__avg_frame.columnconfigure(0, weight=1)
         self.__avg_frame.rowconfigure(0, weight=1)
 
-        # calculating average tre puntini e tra parentesi il tempo,
-        # e sotto ci metto heart rate e ossigeno... poi quando finisce ci metto la diagnosis, e la media
-
         self.__calculating_label = tk.Label(self.__avg_frame, text="Calculating average:\nWait for a tot of seconds",
                                             anchor="center", font=("Courier", 20))
         self.__calculating_label.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
-        self.start_average([], [], [], 0)
+        self.start_average([], [], [], 0, True)
 
-    def start_average(self, hr_array, oxg_array, temp_array, count):
+    def start_average(self, hr_array, oxg_array, temp_array, count, oxg_validated):
         time_string = strftime('%S', time.gmtime(self.__timer))  # time format
         self.__calculating_label.config(text="Calculating average:\nWait for " + time_string + "s")
         self.__timer -= 0.1
+
+        if GUI.global_oximeter.get_oxg_status() != "Finger detected": # 3 = Finger detected
+            oxg_validated = False
 
         hr_array.append(GUI.global_oximeter.get_heart_rate())
         oxg_array.append(GUI.global_oximeter.get_oxygen())
@@ -74,21 +78,24 @@ class Diagnosis:
         count += 1
 
         if self.__timer > 0:
-            GUI.root.after(100, self.start_average, hr_array, oxg_array, temp_array, count)
+            GUI.root.after(100, self.start_average, hr_array, oxg_array, temp_array, count, oxg_validated)
         else:
             self.__timer = Diagnosis.TIME_AVERAGE
             self.__avg_hr = sum(hr_array) / count
-            self.__avg_oxg = sum(oxg_array) / count
+            self.__avg_oxg = sum(oxg_array) / count if oxg_validated else -1
             self.__avg_temp = sum(temp_array) / count
             self.update_values_frame(GUI.global_thermometer.get_unit())
             self.__calculating_label.grid_forget()
             self.position_button()
+            self.update_final_diagnosis(oxg_validated)
 
 
     def update_values_frame(self, unit):
+        avg_oxg_string = str(self.__avg_oxg) if self.__avg_oxg != -1 else "N/A"
+
         self.__values_frame.config(text="Average values:\n"
                                         "HR: " + str(round(self.__avg_hr)) + "BPM; "
-                                        " Oxg: " + str(round(self.__avg_oxg)) + "%; "
+                                        " Oxg: " + avg_oxg_string + "%; "
                                         " Temp: " + str(round(self.__avg_temp, 2)) + unit)
 
     def change_unit_avg_temp(self, unit):
@@ -100,6 +107,18 @@ class Diagnosis:
             self.__avg_temp = self.__avg_temp * 9 / 5 - 459.67
 
         self.update_values_frame(unit)
+
+    # - Limit of fever CDC -> https://www.cdc.gov/quarantine/maritime/definitions-signs-symptoms-conditions-ill-travelers.html
+    # - Limit of oxygen saturation CDC -> https://www.cdc.gov/coronavirus/2019-ncov/videos/oxygen-therapy/Basics_of_Oxygen_Monitoring_and_Oxygen_Therapy_Transcript.pdf
+    def update_final_diagnosis(self, oxg_validated):
+        if oxg_validated and self.__avg_oxg < 95:
+            self.__diagnosis_label.config(text="Oxygen too low!\nPatient should be treated!")
+        elif GUI.global_thermometer.get_unit() == 'C' and self.__avg_temp > 38\
+                or GUI.global_thermometer.get_unit() == 'F' and self.__avg_temp > 100.4\
+                or GUI.global_thermometer.get_unit() == 'K' and self.__avg_temp > 38 + 273.15:
+            self.__diagnosis_label.config(text="Temperature too high.\nIt is suggested a Covid Test.")
+        else:
+            self.__diagnosis_label.config(text="Parameters correct.\nThe patient is healthy")
 
 
 class Oximeter:
@@ -114,7 +133,7 @@ class Oximeter:
         self.__oxim_frame.rowconfigure(3, weight=1)
         self.__oxim_frame.rowconfigure(4, weight=1)
 
-        self.__status = 0
+        self.__status = "No object detected"
         self.__oxygen = 0
         self.__confidence = 0
         self.__heart_rate = 0

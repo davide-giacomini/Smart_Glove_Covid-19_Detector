@@ -68,14 +68,15 @@ if __name__ == "__main__":
                 ox_heart_rate = float(values[9])
                 gui.get_thermometer().set_temp(obj_temp_F, obj_temp_C, obj_temp_K, amb_temp_F, amb_temp_C, amb_temp_K)
                 gui.get_oximeter().set_parameters(ox_status, ox_oxygen, ox_confidence, ox_heart_rate)
+                gui.add_charts_points(ox_heart_rate, ox_oxygen)
         except Exception as err:
             # print(Exception, err)
             pass
 
         # TODO remove next three lines (debug)
-        gui.get_top_plot().append_point(random.randint(-10, 10))
-        gui.get_bottom_plot().append_point(random.randint(-10, 10))
-        time.sleep(0.01)
+        # gui.get_top_plot().append_point(random.randint(-10, 10))
+        # gui.get_bottom_plot().append_point(random.randint(-10, 10))
+        # time.sleep(0.01)
 
         # Update gui window forever
         root_frame.update_idletasks()
