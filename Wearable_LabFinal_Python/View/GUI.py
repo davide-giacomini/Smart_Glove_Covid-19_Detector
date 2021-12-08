@@ -92,9 +92,9 @@ class Diagnosis:
     def update_values_frame(self, unit):
         avg_oxg_string = str(round(self.__avg_oxg)) if round(self.__avg_oxg) != -1 else "N/A"
 
-        self.__values_frame.config(text="Average values:\n"
-                                        "HR: " + str(round(self.__avg_hr)) + "BPM   "
-                                        " Oxg: " + avg_oxg_string + "%   "
+        self.__values_frame.config(text="Average values:\n" +
+                                        "HR: " + str(round(self.__avg_hr)) + "BPM   " +
+                                        " Oxg: " + avg_oxg_string + "%   " +
                                         " Temp: " + str(round(self.__avg_temp, 2)) + unit)
 
     def change_unit_avg_temp(self, unit):
@@ -112,8 +112,8 @@ class Diagnosis:
     def update_final_diagnosis(self, oxg_validated):
         if oxg_validated and self.__avg_oxg < 95:
             self.__diagnosis_label.config(text="Oxygen too low!\nPatient should be treated!")
-        elif GUI.global_thermometer.get_unit() == 'C' and self.__avg_temp > 38\
-                or GUI.global_thermometer.get_unit() == 'F' and self.__avg_temp > 100.4\
+        elif GUI.global_thermometer.get_unit() == 'C' and self.__avg_temp > 38 \
+                or GUI.global_thermometer.get_unit() == 'F' and self.__avg_temp > 100.4 \
                 or GUI.global_thermometer.get_unit() == 'K' and self.__avg_temp > 38 + 273.15:
             self.__diagnosis_label.config(text="Temperature too high.\nIt is suggested a Covid Test.")
         else:
