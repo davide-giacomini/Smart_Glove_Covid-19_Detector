@@ -153,8 +153,18 @@ class Oximeter:
     def get_oxygen(self):
         return self.__oxygen
 
+    def get_oxg_status(self):
+        return self.__status
+
     def set_parameters(self, ox_status, ox_oxygen, ox_confidence, ox_heart_rate):
-        self.__status = ox_status
+        if ox_status == 0:
+            self.__status = "No object detected"
+        elif ox_status == 1:
+            self.__status = "Object detected"
+        elif ox_status == 2:
+            self.__status = "Object other than finger detected"
+        elif ox_status == 3:
+            self.__status = "Finger detected"
         self.__oxygen = ox_oxygen
         self.__confidence = ox_confidence
         self.__heart_rate = ox_heart_rate
@@ -282,7 +292,7 @@ class Thermometer:
 class Plot:
     """This class controls each chart of the application"""
 
-    def __init__(self, fontsize, plot_frame):
+    def __init__(self, fontsize, plot_frame, y_label, ylim):
         self.__figure = Figure(dpi=fontsize)
         self.__subplot = self.__figure.add_subplot(111)
         self.__LEN_ARRAY = GUI.POINTS_NUMBER
@@ -292,6 +302,16 @@ class Plot:
         self.__canvas = FigureCanvasTkAgg(self.__figure, master=plot_frame)  # A tk.DrawingArea.
         self.__canvas.draw()
         self.__canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+        # self.__subplot.set_title("title")
+        self.__subplot.set_xlabel("Time")
+        self.__subplot.set_ylabel(y_label)
+        self.__subplot.set_ylim(ylim[0], ylim[1])
+        self.__subplot.set_xticks([])
+
+        # It's necessary to avoid clearing also labels and titles with subplot.clear()
+        # https://stackoverflow.com/questions/60598164/how-do-i-change-the-subplot-parameters-having-a-figure-in-a-window-in-tkinter
+        self.__line, = self.__subplot.plot([], [])
 
     def append_point(self, point):
         """It appends a new point to the chart. If the chart is already full, it slides towards the left."""
@@ -305,8 +325,9 @@ class Plot:
     def animate(self, i):
         """It lets the application receive live updates (code adapted by https://www.youtube.com/watch?v=JQ7QP5rPvjU)"""
         x_array = np.arange(0, len(self.__points), 1)
-        self.__subplot.clear()
-        self.__subplot.plot(x_array, self.__points)
+        self.__line.set_data(x_array, self.__points)
+        self.__subplot.relim()  # recalculate limits
+        self.__subplot.autoscale_view(True, True, True)  # rescale using limits
 
     def get_figure(self):
         return self.__figure
@@ -318,7 +339,7 @@ class GUI:
     global_diagnosis = None
     global_thermometer = None
     global_oximeter = None
-    POINTS_NUMBER = 200
+    POINTS_NUMBER = 50
     PLOT_FONT_SIZE = 100
     SIZE_GRID = 12
     APP_TITLE = "-- DEFINE TITLE --"
@@ -353,8 +374,7 @@ class GUI:
 
         # Control frame setup
         self.__control_frame = tk.Frame(self.__mainframe, background="black")
-        self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                                  sticky=(N, W, S, E))
+        self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__control_frame.columnconfigure(0, weight=1)
         self.__control_frame.rowconfigure(0, weight=1)
         self.__control_frame.rowconfigure(1, weight=2)
@@ -362,44 +382,39 @@ class GUI:
 
         # Thermometer frame setup
         self.__thermo_frame = tk.Frame(self.__control_frame, background="red")
-        self.__thermo_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                                 sticky=(N, W, S, E))
+        self.__thermo_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_thermometer = self.__thermometer = Thermometer(self.__thermo_frame)
 
         # Oximeter frame setup
         self.__oxim_frame = tk.Frame(self.__control_frame, background="red")
-        self.__oxim_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                               sticky=(N, W, S, E))
+        self.__oxim_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_oximeter = self.__oximeter = Oximeter(self.__oxim_frame)
 
         # Average frame setup
         self.__diagnosis_frame = tk.Frame(self.__control_frame, background="red")
-        self.__diagnosis_frame.grid(column=0, row=2, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                                    sticky=(N, W, S, E))
+        self.__diagnosis_frame.grid(column=0, row=2, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_diagnosis = self.__diagnosis_frame = Diagnosis(self.__diagnosis_frame)
 
         # Plots frame setup
         self.__plots_frame = tk.Frame(self.__mainframe, background=GUI.DARK_RED)
-        self.__plots_frame.grid(column=1, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky=(N, W, S, E))
+        self.__plots_frame.grid(column=1, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__plots_frame.columnconfigure(0, weight=1)
         self.__plots_frame.rowconfigure(0, weight=1)
         self.__plots_frame.rowconfigure(1, weight=1)
 
         # Top plot frame setup
         self.__top_plot_frame = tk.Frame(self.__plots_frame, background="black")
-        self.__top_plot_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                                   sticky=(N, W, S, E))
+        self.__top_plot_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__top_plot_frame.columnconfigure(0, weight=1)
         self.__top_plot_frame.rowconfigure(0, weight=1)
-        self.__top_plot = Plot(GUI.PLOT_FONT_SIZE, self.__top_plot_frame)
+        self.__top_plot = Plot(GUI.PLOT_FONT_SIZE, self.__top_plot_frame, "Heart Rate [BPM]", [50, 180])
 
         # Bottom plot frame setup
         self.__bottom_plot_frame = tk.Frame(self.__plots_frame, background="black")
-        self.__bottom_plot_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES,
-                                      sticky=(N, W, S, E))
+        self.__bottom_plot_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__bottom_plot_frame.columnconfigure(0, weight=1)
         self.__bottom_plot_frame.rowconfigure(0, weight=1)
-        self.__bottom_plot = Plot(GUI.PLOT_FONT_SIZE, self.__bottom_plot_frame)
+        self.__bottom_plot = Plot(GUI.PLOT_FONT_SIZE, self.__bottom_plot_frame, "Oxygen Saturation [%]", [92, 100])
 
     def bind_callback(self, callback):
         """This method binds a callback to the GUI. It enables the pattern Observer-Observable"""
@@ -416,3 +431,7 @@ class GUI:
 
     def get_oximeter(self):
         return self.__oximeter
+
+    def add_charts_points(self, ox_heart_rate, ox_oxygen):
+        self.__bottom_plot.append_point(ox_oxygen)
+        self.__top_plot.append_point(ox_heart_rate)
