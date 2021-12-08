@@ -8,13 +8,6 @@ LCD *lcd;
 Thermometer *thermometer;
 Oximeter *oximeter;
 
-// FIXME: Oximeter hardcoded
-const int resPin = 8;
-const int mfioPin = 9;
-// Takes address, reset pin, and MFIO pin.
-SparkFun_Bio_Sensor_Hub bioHub(resPin, mfioPin);
-bioData body;
-
 char current_unit;
 unsigned long start_time;
 
@@ -29,31 +22,8 @@ void setup()
     lcd = new LCD(); // It's the same of `lcd = &LCD()`
     lcd->setup_lcd();
 
-    // oximeter = new Oximeter();
-    // oximeter->setup();
-    // FIXME: OXIMETER hardcoded
-    int result = bioHub.begin();
-    if (!result)
-        Serial.println("Sensor started!");
-    else
-        Serial.println("Could not communicate with the sensor!!!");
-
-    Serial.println("Configuring Sensor....");
-    int error = bioHub.configBpm(MODE_ONE); // Configuring just the BPM settings.
-    if (!error)
-    {
-        Serial.println("Sensor configured.");
-    }
-    else
-    {
-        Serial.println("Error configuring sensor.");
-        Serial.print("Error: ");
-        Serial.println(error);
-    }
-    // Data lags a bit behind the sensor, if you're finger is on the sensor when
-    // it's being configured this delay will give some time for the data to catch
-    // up.
-    // delay(4000);
+    oximeter = new Oximeter();
+    oximeter->setup();
 
     thermometer = new Thermometer();
     if (!thermometer->setup())
@@ -149,9 +119,9 @@ void loop()
     float amb_temp_C = thermometer->getCelsiusAmbient();
     float amb_temp_K = thermometer->getKelvinAmbient();
 
-    // oximeter->write();
-    // FIXME: OXIMETER hardcoded
-    body = bioHub.readBpm();
+    // NB: you need to have the OBJECT of bioData, not the reference
+    // If you try to get the same values from the reference, it fails
+    bioData body = oximeter->getBioData();
     uint8_t oxim_status = body.status;
     uint8_t oxygen = body.oxygen;
 
@@ -165,7 +135,6 @@ void loop()
         start_time = millis();
     }
 
-    // FIXME: the temperature in Fahrenheit must be with only one decimal digit if it is over 100
     if (oxim_status == uint8_t(OximeterStatus::NO_OBJ))
     {
         String temp_to_display;
