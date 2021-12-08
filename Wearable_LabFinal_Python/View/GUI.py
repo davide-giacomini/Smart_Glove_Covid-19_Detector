@@ -21,15 +21,14 @@ class Diagnosis:
         self.__avg_temp = None
         self.__timer = Diagnosis.TIME_AVERAGE
 
-        self.__upper_frame = tk.Frame(self.__diagn_frame, background="black")
+        self.__upper_frame = tk.Frame(self.__diagn_frame)
         self.__upper_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__upper_frame.columnconfigure(0, weight=1)
         self.__upper_frame.rowconfigure(0, weight=1)
-        self.__title_label = tk.Label(self.__upper_frame, text="Diagnosis", anchor="center",
-                                      font=("Courier", 20, "bold"))
+        self.__title_label = tk.Label(self.__upper_frame, text="Diagnosis", anchor="center", font=GUI.TITLE_FONT, background="#fce0a2")
         self.__title_label.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
-        self.__lower_frame = tk.Frame(self.__diagn_frame, background="black")
+        self.__lower_frame = tk.Frame(self.__diagn_frame)
         self.__lower_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__lower_frame.columnconfigure(0, weight=1)
         self.__lower_frame.rowconfigure(0, weight=1)
@@ -47,14 +46,14 @@ class Diagnosis:
 
 
     def position_button(self):
-        self.__start_button = tk.Button(self.__lower_frame, text="Start diagnosis", anchor="center", font=("Courier", 10), fg="green")
+        self.__start_button = tk.Button(self.__lower_frame, text="Start diagnosis", anchor="center", font=("Courier", 20, "bold"), fg="green")
         self.__start_button.config(command=lambda: self.__start_diag_handler())
         self.__start_button.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
     def __start_diag_handler(self):
         self.__start_button.grid_forget()
 
-        self.__avg_frame = tk.Frame(self.__lower_frame, background="black")
+        self.__avg_frame = tk.Frame(self.__lower_frame)
         self.__avg_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__avg_frame.columnconfigure(0, weight=1)
         self.__avg_frame.rowconfigure(0, weight=1)
@@ -91,11 +90,11 @@ class Diagnosis:
 
 
     def update_values_frame(self, unit):
-        avg_oxg_string = str(self.__avg_oxg) if self.__avg_oxg != -1 else "N/A"
+        avg_oxg_string = str(round(self.__avg_oxg)) if round(self.__avg_oxg) != -1 else "N/A"
 
         self.__values_frame.config(text="Average values:\n"
-                                        "HR: " + str(round(self.__avg_hr)) + "BPM; "
-                                        " Oxg: " + avg_oxg_string + "%; "
+                                        "HR: " + str(round(self.__avg_hr)) + "BPM   "
+                                        " Oxg: " + avg_oxg_string + "%   "
                                         " Temp: " + str(round(self.__avg_temp, 2)) + unit)
 
     def change_unit_avg_temp(self, unit):
@@ -138,24 +137,19 @@ class Oximeter:
         self.__confidence = 0
         self.__heart_rate = 0
 
-        self.__title_label = tk.Label(self.__oxim_frame, text="Oximeter parameters", anchor="center",
-                                      font=("Courier", 20))
+        self.__title_label = tk.Label(self.__oxim_frame, text="Oximeter parameters", anchor="center", font=GUI.TITLE_FONT, background="#fce0a2")
         self.__title_label.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
-        self.__status_label = tk.Label(self.__oxim_frame, text="Status", anchor="center",
-                                       font=("Courier", 15))
+        self.__status_label = tk.Label(self.__oxim_frame, text="Status", anchor="center", font=GUI.LABEL_FONT)
         self.__status_label.grid(column=0, row=1, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
-        self.__oxygen_label = tk.Label(self.__oxim_frame, text="Oxygen", anchor="center",
-                                       font=("Courier", 15))
+        self.__oxygen_label = tk.Label(self.__oxim_frame, text="Oxygen", anchor="center", font=GUI.LABEL_FONT)
         self.__oxygen_label.grid(column=0, row=2, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
-        self.__confidence_label = tk.Label(self.__oxim_frame, text="Confidence", anchor="center",
-                                           font=("Courier", 15))
+        self.__confidence_label = tk.Label(self.__oxim_frame, text="Confidence", anchor="center", font=GUI.LABEL_FONT)
         self.__confidence_label.grid(column=0, row=3, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
-        self.__heart_rate_label = tk.Label(self.__oxim_frame, text="Heart Rate", anchor="center",
-                                           font=("Courier", 15))
+        self.__heart_rate_label = tk.Label(self.__oxim_frame, text="Heart Rate", anchor="center", font=GUI.LABEL_FONT)
         self.__heart_rate_label.grid(column=0, row=4, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
         self.update_oxim_labels()
@@ -211,8 +205,7 @@ class Thermometer:
                                 sticky=(N, W, S, E))
         self.__title_frame.columnconfigure(0, weight=1)
         self.__title_frame.rowconfigure(0, weight=1)
-        self.__title_label = tk.Label(self.__title_frame, text="Thermometer parameters", anchor="center",
-                                      font=("Courier", 20))
+        self.__title_label = tk.Label(self.__title_frame, text="Thermometer parameters", anchor="center", font=GUI.TITLE_FONT, background="#fce0a2")
         self.__title_label.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
         self.__content_frame = tk.Frame(self.__thermo_frame)
@@ -242,8 +235,7 @@ class Thermometer:
         #                           sticky=(N, W, S, E))
         # self.__obj_temp_frame.columnconfigure(0, weight=1)
         # self.__obj_temp_frame.rowconfigure(0, weight=1)
-        self.__obj_temp_label = tk.Label(self.__labels_frame, text="Object Temperature", anchor="center",
-                                         font=("Courier", 15))
+        self.__obj_temp_label = tk.Label(self.__labels_frame, text="Object Temperature", anchor="w", font=GUI.LABEL_FONT)
         self.__obj_temp_label.grid(column=0, row=1, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
         # Ambient temperature label
@@ -252,13 +244,11 @@ class Thermometer:
         #                           sticky=(N, W, S, E))
         # self.__amb_temp_frame.columnconfigure(0, weight=1)
         # self.__amb_temp_frame.rowconfigure(0, weight=1)
-        self.__amb_temp_label = tk.Label(self.__labels_frame, text="Ambient Temperature", anchor="center",
-                                         font=("Courier", 15))
+        self.__amb_temp_label = tk.Label(self.__labels_frame, text="Ambient Temperature", anchor="w", font=GUI.LABEL_FONT)
         self.__amb_temp_label.grid(column=0, row=2, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
         # Unit button
-        self.__change_unit_but = tk.Button(self.__buttons_frame, text="Change\nUnit", anchor="center",
-                                           font=("Courier", 10), fg="green")
+        self.__change_unit_but = tk.Button(self.__buttons_frame, text="Change\nUnit", anchor="center", font=("Courier", 20, "bold"), fg="green")
         self.__change_unit_but.config(command=lambda: self.__change_unit_handler())
         self.__change_unit_but.grid(column=0, row=0, sticky="news", padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES)
 
@@ -284,8 +274,8 @@ class Thermometer:
         self.__change_unit_callbacks.append(callback)
 
     def update_temp_labels(self):
-        obj_text = "Obj T: " + str(round(self.__obj_temp, 2)) + " " + self.__unit
-        amb_temp = "Amb T: " + str(round(self.__amb_temp, 2)) + " " + self.__unit
+        obj_text = "Object Temperature: " + str(round(self.__obj_temp, 2)) + " " + self.__unit
+        amb_temp = "Ambient Temperature: " + str(round(self.__amb_temp, 2)) + " " + self.__unit
         self.__obj_temp_label.config(text=obj_text)
         self.__amb_temp_label.config(text=amb_temp)
 
@@ -361,10 +351,12 @@ class GUI:
     POINTS_NUMBER = 50
     PLOT_FONT_SIZE = 100
     SIZE_GRID = 12
-    APP_TITLE = "-- DEFINE TITLE --"
+    APP_TITLE = "Smart Glove Covid-19 Detector"
     WINDOW_GEOMETRY = "1200x800"
     PAD_BTW_FRAMES = 10  # Padding between frames
     DARK_RED = "#ab2800"
+    TITLE_FONT = ("Courier", 25, "bold")
+    LABEL_FONT = ("Courier", 20)
     root = None
 
     def update_observers(self, *args):
@@ -392,7 +384,7 @@ class GUI:
         self.__mainframe.rowconfigure(0, weight=1)
 
         # Control frame setup
-        self.__control_frame = tk.Frame(self.__mainframe, background="black")
+        self.__control_frame = tk.Frame(self.__mainframe)
         self.__control_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__control_frame.columnconfigure(0, weight=1)
         self.__control_frame.rowconfigure(0, weight=1)
@@ -400,36 +392,36 @@ class GUI:
         self.__control_frame.rowconfigure(2, weight=2)
 
         # Thermometer frame setup
-        self.__thermo_frame = tk.Frame(self.__control_frame, background="red")
+        self.__thermo_frame = tk.Frame(self.__control_frame)
         self.__thermo_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_thermometer = self.__thermometer = Thermometer(self.__thermo_frame)
 
         # Oximeter frame setup
-        self.__oxim_frame = tk.Frame(self.__control_frame, background="red")
+        self.__oxim_frame = tk.Frame(self.__control_frame)
         self.__oxim_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_oximeter = self.__oximeter = Oximeter(self.__oxim_frame)
 
         # Average frame setup
-        self.__diagnosis_frame = tk.Frame(self.__control_frame, background="red")
+        self.__diagnosis_frame = tk.Frame(self.__control_frame)
         self.__diagnosis_frame.grid(column=0, row=2, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         GUI.global_diagnosis = self.__diagnosis_frame = Diagnosis(self.__diagnosis_frame)
 
         # Plots frame setup
-        self.__plots_frame = tk.Frame(self.__mainframe, background=GUI.DARK_RED)
+        self.__plots_frame = tk.Frame(self.__mainframe)
         self.__plots_frame.grid(column=1, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__plots_frame.columnconfigure(0, weight=1)
         self.__plots_frame.rowconfigure(0, weight=1)
         self.__plots_frame.rowconfigure(1, weight=1)
 
         # Top plot frame setup
-        self.__top_plot_frame = tk.Frame(self.__plots_frame, background="black")
+        self.__top_plot_frame = tk.Frame(self.__plots_frame)
         self.__top_plot_frame.grid(column=0, row=0, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__top_plot_frame.columnconfigure(0, weight=1)
         self.__top_plot_frame.rowconfigure(0, weight=1)
         self.__top_plot = Plot(GUI.PLOT_FONT_SIZE, self.__top_plot_frame, "Heart Rate [BPM]", [50, 180])
 
         # Bottom plot frame setup
-        self.__bottom_plot_frame = tk.Frame(self.__plots_frame, background="black")
+        self.__bottom_plot_frame = tk.Frame(self.__plots_frame)
         self.__bottom_plot_frame.grid(column=0, row=1, padx=GUI.PAD_BTW_FRAMES, pady=GUI.PAD_BTW_FRAMES, sticky="news")
         self.__bottom_plot_frame.columnconfigure(0, weight=1)
         self.__bottom_plot_frame.rowconfigure(0, weight=1)
