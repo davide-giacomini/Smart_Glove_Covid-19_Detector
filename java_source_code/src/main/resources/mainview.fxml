@@ -37,7 +37,10 @@
                         </Label>
                      </top>
                      <center>
-                        <AnchorPane fx:id="oxValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <AnchorPane fx:id="oxValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox fx:id="oxVBox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
                      </center></BorderPane>
                   <BorderPane fx:id="diagValuesBorderPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <top>
@@ -48,7 +51,32 @@
                         </Label>
                      </top>
                      <center>
-                        <AnchorPane fx:id="diagValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <AnchorPane fx:id="diagValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox fx:id="diagVBox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <BorderPane VBox.vgrow="ALWAYS">
+                                       <padding>
+                                          <Insets top="30.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <center>
+                                          <Button fx:id="startDiagnosisButton" mnemonicParsing="false" onAction="#startDiagnosisAction" text="Start Diagnosis" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                    <BorderPane VBox.vgrow="ALWAYS">
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                       <center>
+                                          <Label fx:id="diagnosisLabel" styleClass="value-label" text="Label" visible="false" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                      </center></BorderPane>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <top>
@@ -59,7 +87,33 @@
                         </Label>
                      </top>
                      <center>
-                        <AnchorPane fx:id="thermValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <AnchorPane fx:id="thermValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox fx:id="thermVBox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <BorderPane VBox.vgrow="ALWAYS">
+                                       <center>
+                                          <MenuButton mnemonicParsing="false" text="Select Unit" BorderPane.alignment="CENTER">
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" onAction="#thermometerFarhenheitChosen" text="Fahrenheit" />
+                                              <MenuItem mnemonicParsing="false" onAction="#thermometerCelsiusChosen" text="Celsius" />
+                                                <MenuItem mnemonicParsing="false" onAction="#thermometerKelvinChosen" text="Kelvin" />
+                                            </items>
+                                             <BorderPane.margin>
+                                                <Insets />
+                                             </BorderPane.margin>
+                                          </MenuButton>
+                                       </center>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets top="30.0" />
+                                       </padding>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                      </center>
                   </BorderPane>
                </children>

@@ -10,16 +10,11 @@ public class Oximeter {
 
     public void setStatus(int status) {
         switch (status) {
-            case 0:
-                this.status.set(Status.NO_OBJECT_DETECTED.toString());
-            case 1:
-                this.status.set(Status.OBJECT_DETECTED.toString());
-            case 2:
-                this.status.set(Status.OBJECT_NO_FINGER_DETECTED.toString());
-            case 3:
-                this.status.set(Status.FINGER_DETECTED.toString());
-            default:
-                throw new IllegalArgumentException("The integer must be between 0 and 3.");
+            case 0 -> this.status.set(Status.NO_OBJECT_DETECTED.toString());
+            case 1 -> this.status.set(Status.OBJECT_DETECTED.toString());
+            case 2 -> this.status.set(Status.OBJECT_NO_FINGER_DETECTED.toString());
+            case 3 -> this.status.set(Status.FINGER_DETECTED.toString());
+            default -> throw new IllegalArgumentException("The integer must be between 0 and 3.");
         }
     }
 
@@ -33,6 +28,22 @@ public class Oximeter {
 
     public void setHeartRate(float heartRate) {
         this.heartRate.set(heartRate);
+    }
+
+    public StringProperty statusProperty() {
+        return status;
+    }
+
+    public IntegerProperty oxygenProperty() {
+        return oxygen;
+    }
+
+    public IntegerProperty confidenceProperty() {
+        return confidence;
+    }
+
+    public FloatProperty heartRateProperty() {
+        return heartRate;
     }
 }
 

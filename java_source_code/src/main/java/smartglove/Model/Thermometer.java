@@ -32,4 +32,43 @@ public class Thermometer {
     public void setUnit(String unit) {
         this.unit.set(unit);
     }
+
+    public void changeIntoFarheneit() {
+        if (unit.get().equals("C")) {
+            objectTemperature.set(Math.round((objectTemperature.get() * 9 / 5 + 32)*100/100.00));
+            ambientTemperature.set(Math.round((ambientTemperature.get() * 9 / 5 + 32)*100/100.0));
+        }
+        else if ( unit.get().equals("K")) {
+            objectTemperature.set(Math.round(((objectTemperature.get() - 273.15) * 9 / 5 +32)*100/100.0));
+            ambientTemperature.set(Math.round(((ambientTemperature.get() - 273.15) * 9 / 5 +32)*100/100.0));
+        }
+
+        unit.set("F");
+    }
+
+    public void changeIntoCelsius() {
+        if (unit.get().equals("F")) {
+            objectTemperature.set(Math.round(((objectTemperature.get() - 32) * 5 / 9)*100/100.0));
+            ambientTemperature.set(Math.round(((ambientTemperature.get() - 32) * 5 / 9)*100/100.0));
+        }
+        else if ( unit.get().equals("K")) {
+            objectTemperature.set(Math.round((objectTemperature.get() - 273.15)*100/100.0));
+            ambientTemperature.set(Math.round((ambientTemperature.get() - 273.15)*100/100.0));
+        }
+
+        unit.set("C");
+    }
+
+    public void changeIntoKelvin() {
+        if (unit.get().equals("C")) {
+            objectTemperature.set(Math.round((objectTemperature.get() + 273.15)*100/100.0));
+            ambientTemperature.set(Math.round((ambientTemperature.get() + 273.15)*100/100.0));
+        }
+        else if ( unit.get().equals("F")) {
+            objectTemperature.set(Math.round(((objectTemperature.get() - 32.0) * 5 / 9 + 273.15)*100/100.0));
+            ambientTemperature.set(Math.round(((ambientTemperature.get() - 32.0) * 5 / 9 + 273.15)*100/100.0));
+        }
+
+        unit.set("K");
+    }
 }
