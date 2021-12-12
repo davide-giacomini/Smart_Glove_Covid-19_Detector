@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@mainview-white.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartglove.MainViewController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <GridPane fx:id="valuesGridPane">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="33.3" prefWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="33.3" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="33.3" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <BorderPane fx:id="oxValuesBorderPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <top>
+                        <Label styleClass="title" text="%Oximeter" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                     </top>
+                     <center>
+                        <AnchorPane fx:id="oxValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center></BorderPane>
+                  <BorderPane fx:id="diagValuesBorderPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <top>
+                        <Label styleClass="title" text="%Diagnosis" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                     </top>
+                     <center>
+                        <AnchorPane fx:id="diagValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center></BorderPane>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label styleClass="title" text="%Thermometer" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                     </top>
+                     <center>
+                        <AnchorPane fx:id="thermValuesAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

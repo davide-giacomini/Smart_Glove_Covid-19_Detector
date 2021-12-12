@@ -1,0 +1,15 @@
+.root{
+    -fx-background-color: #ffffff;  /* white */
+}
+
+.label.title {
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d90000; /* dark red */
+}
+
+.label.value-label{
+    -fx-font-size: 12pt;
+    -fx-font-style: italic;
+    -fx-text-fill: #000000; /* black */
+}
