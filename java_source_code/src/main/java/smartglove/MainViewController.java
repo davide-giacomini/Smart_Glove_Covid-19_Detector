@@ -2,6 +2,8 @@ package smartglove;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
@@ -13,9 +15,25 @@ public class MainViewController implements Initializable {
     @FXML
     private AnchorPane thermValuesAnchorPane;
 
+    @FXML
+    private AnchorPane lineChartAnchorPane;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         displayThermometerValues();
+        initChart();
+    }
+
+    private void initChart() {
+        LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
+
+        lineChart.getXAxis().setLabel("Time");
+
+        lineChartAnchorPane.getChildren().add(lineChart);
+        AnchorPane.setBottomAnchor(lineChart, 0.0);
+        AnchorPane.setTopAnchor(lineChart, 0.0);
+        AnchorPane.setRightAnchor(lineChart, 0.0);
+        AnchorPane.setLeftAnchor(lineChart, 0.0);
     }
 
     private void displayThermometerValues() {

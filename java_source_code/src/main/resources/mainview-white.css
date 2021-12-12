@@ -13,3 +13,51 @@
     -fx-font-style: italic;
     -fx-text-fill: #000000; /* black */
 }
+
+.chart-plot-background {
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;  /* light grey */
+    -fx-border-width: 2px;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.axis {
+    -fx-font-size: 10pt;
+    -fx-tick-label-fill: red;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-tick-label {
+    -fx-font-weight: bold;
+}
+
+.axis-label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.axis:bottom {
+    -fx-border-color: transparent;
+    -fx-tick-length: 5;    /* how much time I wanna visualize between each tick in seconds */
+}
+
+.axis:left {
+    -fx-border-color: transparent;
+}
+
+.axis-tick-mark {
+    -fx-stroke: red;
+}
+
+.chart-title {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14pt;
+}
