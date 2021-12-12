@@ -31,7 +31,7 @@ void Oximeter::setup()
     // up.
 }
 
-bioData Oximeter::getBioData()
+const bioData Oximeter::getBioData()
 {
 
     return Oximeter::bioHub->readBpm();

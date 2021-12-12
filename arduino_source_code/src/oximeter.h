@@ -9,6 +9,10 @@ enum class OximeterStatus {
     FING_DET = 3
 };
 
+/**
+ * @brief This class encapsulates the Oximeter information
+ * 
+ */
 class Oximeter {
 public:
     static const int ADDR = 0x55;   // Physical address of the device
@@ -17,7 +21,13 @@ public:
 
     Oximeter::Oximeter();
     void setup();
-    bioData Oximeter::getBioData();
+    /**
+     * @brief This getter is necessary to get the bioData object from the SparkFun_Bio_Sensor_Hub_Library library.
+     * Getting the reference would result in spurious values (still don't know why)
+     * 
+     * @return a bioData object, that contains all the values in which we are interested from the oximeter
+     */
+    const bioData Oximeter::getBioData();
 private:
     /**
      * @brief // Takes address, reset pin, and MFIO pin. 

@@ -92,22 +92,6 @@ void display_covid_status(float ox, float temp_C)
     }
 }
 
-float custom_round(float var)
-{
-    // we use array of chars to store number
-    // as a string.
-    char str[40];
-
-    // Print in string the value of var
-    // with two decimal point
-    sprintf(str, "%.1f", var);
-
-    // scan string value in var
-    sscanf(str, "%f", &var);
-
-    return var;
-}
-
 void loop()
 {
 
