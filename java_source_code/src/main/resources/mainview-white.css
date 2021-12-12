@@ -14,52 +14,57 @@
     -fx-text-fill: #000000; /* black */
 }
 
-.chart-plot-background {
-    -fx-background-color: #ffffff;
-    -fx-border-color: black;  /* light grey */
-    -fx-border-width: 2px;
+.label.diagnosis-label{
+    -fx-font-size: 14pt;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: green; /* black */
+    -fx-text-alignment: center;
 }
 
-.chart-vertical-grid-lines {
-    -fx-stroke: transparent;
+.chart-legend {
+    -fx-background-color:  transparent;
+    -fx-padding: 10px;
 }
 
-.chart-horizontal-grid-lines {
-    -fx-stroke: transparent;
-}
-
-.axis {
-    -fx-font-size: 10pt;
-    -fx-tick-label-fill: red;
-    -fx-minor-tick-length: 10;
-}
-
-.axis-tick-label {
+.chart-title {
+    -fx-text-fill: #d90000; /* dark red */
+    -fx-font-size: 15pt;
     -fx-font-weight: bold;
 }
 
 .axis-label {
     -fx-text-fill: black;
     -fx-font-weight: bold;
+    -fx-font-size: 12pt;
 }
 
-.axis:bottom {
-    -fx-border-color: transparent;
-    -fx-tick-length: 5;    /* how much time I wanna visualize between each tick in seconds */
+.chart-plot-background {
+    -fx-background-color: transparent;
 }
 
-.axis:left {
-    -fx-border-color: transparent;
+.chart-horizontal-grid-lines {
+    -fx-stroke: #a1a1a1;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.axis {
+    /*-fx-tick-label-color: black;*/ /* Doesn't work, I hardcoded it */
+    -fx-tick-label-font-size: 10pt;
+    -fx-tick-label-font-weight: bold;
 }
 
 .axis-tick-mark {
-    -fx-stroke: red;
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
 }
 
-.chart-title {
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-font-size: 14pt;
+.axis-minor-tick-mark {
+    -fx-stroke: #a1a1a1;
+    -fx-stroke-width: 0.5;
 }
 
 .menu-button, .button {

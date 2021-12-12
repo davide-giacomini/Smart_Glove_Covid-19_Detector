@@ -24,7 +24,7 @@ public class Starter extends Application {
         ResourceBundle languageBundle = ResourceBundle.getBundle("language", new Locale("en", "US"));
 
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("mainview.fxml")), languageBundle);
-        Scene scene = new Scene(loader.load(), 800, 600);
+        Scene scene = new Scene(loader.load(), 1200, 800);
         stage.setTitle("Smart Glove Detector");
         stage.setScene(scene);
         stage.show();

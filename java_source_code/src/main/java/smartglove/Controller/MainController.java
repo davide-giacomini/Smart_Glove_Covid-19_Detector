@@ -1,5 +1,6 @@
 package smartglove.Controller;
 
+import javafx.fxml.FXMLLoader;
 import smartglove.Controller.ControllerInterface.MainControllerListener;
 import smartglove.Model.Diagnosis;
 import smartglove.Model.Oximeter;
@@ -69,11 +70,14 @@ public class MainController implements MainControllerListener {
             thermometer.setAmbientTemperature(Float.parseFloat(values.get(5)));
         }
 
+        Integer oxygen = Integer.valueOf(values.get(7));
+        Float heartRate = Float.valueOf(values.get(9));
+
         oximeter.setStatus(Integer.parseInt(values.get(6)));
-        oximeter.setOxygen(Integer.parseInt(values.get(7)));
-        oximeter.setHeartRate(Float.parseFloat(values.get(9)));
+        oximeter.setOxygen(oxygen);
+        oximeter.setHeartRate(heartRate);
         oximeter.setConfidence(Integer.parseInt(values.get(8)));
 
-//        mainViewController.updateChart();
+        mainViewController.updateChart(oxygen, heartRate);
     }
 }

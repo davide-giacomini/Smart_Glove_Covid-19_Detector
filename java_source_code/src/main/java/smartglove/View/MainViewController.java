@@ -1,6 +1,7 @@
 package smartglove.View;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +22,8 @@ import java.security.cert.PolicyNode;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
+import static javafx.scene.paint.Color.BLACK;
+
 public class MainViewController extends MainViewControllerObservable {
 
     private final DecimalFormat f = new DecimalFormat("##.00");
@@ -38,15 +41,21 @@ public class MainViewController extends MainViewControllerObservable {
     @FXML
     private Button startDiagnosisButton;
 
+    private final LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initChart();
     }
 
     private void initChart() {
-        LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
+        lineChart.setTitle("Heart Rate and Oxygen Saturation");
 
-        lineChart.getXAxis().setLabel("Time");
+        lineChart.getXAxis().setLabel("Time [s]");
+        lineChart.getXAxis().setTickMarkVisible(false);
+        lineChart.getXAxis().setTickLabelsVisible(false);
+        lineChart.getYAxis().setLabel("HR [BPM] and Oxg Sat [%]");
+        lineChart.getYAxis().setTickLabelFill(BLACK);   // It doesn't work here or in the CSS
 
         lineChartAnchorPane.getChildren().add(lineChart);
         AnchorPane.setBottomAnchor(lineChart, 0.0);
@@ -62,9 +71,15 @@ public class MainViewController extends MainViewControllerObservable {
 
         //defining a series to display oxygen
         XYChart.Series<Number, Number> oxgSeries = new XYChart.Series<>();
-        oxgSeries.setName("Heart Rate");
+        oxgSeries.setName("Oxygen Saturation");
         // add series to chart
         lineChart.getData().add(oxgSeries);
+
+        // Prepare a fixed time length of 20s
+        for (int i=0; i<20; i++) {
+            hrSeries.getData().add(new XYChart.Data<>(i, 0));
+            oxgSeries.getData().add(new XYChart.Data<>(i,0));
+        }
     }
 
     public void bindThermometerValues(Thermometer thermometer) {
@@ -215,5 +230,20 @@ public class MainViewController extends MainViewControllerObservable {
     private void startDiagnosisAction(ActionEvent actionEvent) {
         diagnosisLabel.setVisible(true);
         notifyStartDiagnosis();
+    }
+
+    public void updateChart(Integer oxygen, Float heartRate) {
+        ObservableList<XYChart.Data<Number, Number>> pointsHR = lineChart.getData().get(0).getData();
+        ObservableList<XYChart.Data<Number, Number>> pointsOx = lineChart.getData().get(1).getData();
+
+        for (int i=0; i<pointsHR.size()-1; i++) {
+            pointsHR.get(i).setYValue(pointsHR.get(i+1).getYValue());
+        }
+        pointsHR.get(pointsHR.size()-1).setYValue(heartRate);
+
+        for (int i=0; i<pointsOx.size()-1; i++) {
+            pointsOx.get(i).setYValue(pointsOx.get(i+1).getYValue());
+        }
+        pointsOx.get(pointsOx.size()-1).setYValue(oxygen);
     }
 }

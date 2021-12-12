@@ -13,8 +13,8 @@
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="ALWAYS" />
-          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" percentHeight="35.0" prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" percentHeight="65.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
             <AnchorPane fx:id="lineChartAnchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
@@ -71,7 +71,7 @@
                                           <Insets top="20.0" />
                                        </padding>
                                        <center>
-                                          <Label fx:id="diagnosisLabel" styleClass="value-label" text="Label" visible="false" BorderPane.alignment="CENTER" />
+                                          <Label fx:id="diagnosisLabel" styleClass="diagnosis-label" text="Label" visible="false" BorderPane.alignment="CENTER" />
                                        </center>
                                     </BorderPane>
                                  </children>
