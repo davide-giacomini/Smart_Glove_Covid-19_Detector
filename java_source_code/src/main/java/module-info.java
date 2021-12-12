@@ -5,4 +5,6 @@ module smartglove.java_source_code {
 
     opens smartglove to javafx.fxml;
     exports smartglove;
+    exports smartglove.View;
+    opens smartglove.View to javafx.fxml;
 }
