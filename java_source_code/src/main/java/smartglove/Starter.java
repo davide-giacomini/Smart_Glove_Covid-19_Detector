@@ -4,14 +4,19 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import smartglove.Controller.MainController;
 import smartglove.View.MainViewController;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class Starter extends Application {
     private final static ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();

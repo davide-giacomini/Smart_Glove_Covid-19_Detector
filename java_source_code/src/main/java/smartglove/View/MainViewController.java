@@ -4,21 +4,22 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import smartglove.Model.Diagnosis;
 import smartglove.Model.Oximeter;
 import smartglove.Model.Thermometer;
 import smartglove.View.ViewObservable.MainViewControllerObservable;
 
 import java.net.URL;
-import java.security.cert.PolicyNode;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
