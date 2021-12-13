@@ -780,3 +780,8 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,linux,windows,macos,git,visualstudio,visualstudiocode
+
+#Customized for ignoring latex
+*
+!.gitignore
+!*.pdf
