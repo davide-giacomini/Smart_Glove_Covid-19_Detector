@@ -6,9 +6,7 @@ This is a sample application in JavaFX displaying the values taken by the thermo
 
 This application is able to read at real-time the values taken by the glove, and it displays them with some labels and a chart. It is a very simple application that doesn't do much, but it has been coded for being easily extended and maintained.
 
-<!-- [prova](https://github.com/davide-giacomini/Smart_Glove_Covid-19_Detector/blob/master/smart-glove-detector-GUI?raw=true) -->
-
-![prova](../assets/smart-glove-detector-GUI.png)
+![gui](../assets/smart-glove-detector-GUI.png)
 
 ## Design
 This application harness the pattern [MVC](https://it.wikipedia.org/wiki/Model-view-controller) for managing the interactions with the user. I used the [Java Properties](https://docs.oracle.com/javase/7/docs/api/java/util/Properties.html) for dynamically binding the View to the Model, and manually implemented an interface Observer-Observable to notify the Controller from the View.
