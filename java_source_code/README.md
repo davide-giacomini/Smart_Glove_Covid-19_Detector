@@ -49,7 +49,7 @@ Or start IntellJ and select: `Open Folder -> Smart_Glove_Covid-19_Detector/java_
 
 ## Developer
 
-Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/))
+Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/), [email](mailto://giacomini.davide@outlook.com))
 
 ## Further Implementation
 

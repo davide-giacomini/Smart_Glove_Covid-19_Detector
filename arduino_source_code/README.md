@@ -137,7 +137,7 @@ lib_deps =
 
 ## Developers
 
-- Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/))
+- Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/), [email](mailto://giacomini.davide@outlook.com))
 - Jake Campbell ([GitHub](https://github.com/Jacob-Campbell))
 
 ## Further Implementations
